@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-16T13:38:09Z",
+  "title": "Design System: Axquotes",
+  "extensions": {
+    "colorMeta": {
+      "ink": { "role": "neutral", "displayName": "Ink Black", "canonical": "#101119", "tonalRamp": ["#050509", "#101119", "#292a34", "#454650", "#62636d", "#858690", "#b7b8c0", "#f2f2f4"] },
+      "ink-soft": { "role": "neutral", "displayName": "Soft Ink", "canonical": "#22242e", "tonalRamp": ["#090a0f", "#171921", "#2c2e39", "#464954", "#626570", "#858893", "#b7b9c1", "#f2f2f4"] },
+      "paper": { "role": "neutral", "displayName": "Paper White", "canonical": "#ffffff", "tonalRamp": ["#262626", "#444444", "#626262", "#818181", "#a2a2a2", "#c4c4c4", "#e2e2e2", "#ffffff"] },
+      "mist": { "role": "neutral", "displayName": "Editorial Mist", "canonical": "#f3f4f6", "tonalRamp": ["#222326", "#3e3f43", "#5c5d61", "#797b7f", "#999a9e", "#babbbf", "#dadbde", "#f3f4f6"] },
+      "mist-blue": { "role": "neutral", "displayName": "Blue Mist", "canonical": "#e7f6fc", "tonalRamp": ["#11252d", "#28434f", "#426270", "#5d8291", "#7aa3b3", "#9bc5d5", "#bce6f5", "#e7f6fc"] },
+      "line": { "role": "neutral", "displayName": "Hairline Grey", "canonical": "#dedfe4", "tonalRamp": ["#202126", "#3b3c42", "#57585f", "#74757c", "#92939a", "#b1b2b9", "#d0d1d7", "#f1f1f4"] },
+      "muted": { "role": "neutral", "displayName": "Market Grey", "canonical": "#626671", "tonalRamp": ["#111318", "#292c34", "#424650", "#5d616c", "#797d88", "#989ca6", "#c0c2c9", "#f1f2f4"] },
+      "coral": { "role": "primary", "displayName": "Signal Coral", "canonical": "#ff455f", "tonalRamp": ["#3b0711", "#67101f", "#941b30", "#c42943", "#ef3b56", "#ff7182", "#ffabb4", "#ffecef"] },
+      "coral-action": { "role": "primary", "displayName": "Action Coral", "canonical": "#d62d47", "tonalRamp": ["#35070f", "#5e0d1b", "#891728", "#b62239", "#d62d47", "#eb6678", "#f5a4af", "#fdecef"] },
+      "coral-dark": { "role": "primary", "displayName": "Deep Coral", "canonical": "#b9233a", "tonalRamp": ["#30060d", "#550b18", "#7b1223", "#a21c31", "#c9324a", "#df6c7d", "#efaab4", "#fbecef"] },
+      "blue": { "role": "secondary", "displayName": "Electric Market Blue", "canonical": "#138fc4", "tonalRamp": ["#031f2d", "#063c56", "#095a7e", "#0d79a7", "#1398cf", "#55b7dd", "#9ad7ed", "#e7f6fc"] },
+      "blue-dark": { "role": "secondary", "displayName": "Deep Market Blue", "canonical": "#0b5a89", "tonalRamp": ["#021925", "#043247", "#074a6b", "#0b638e", "#267fac", "#5da3c8", "#9ccce1", "#e8f5fa"] },
+      "indigo": { "role": "tertiary", "displayName": "Desk Indigo", "canonical": "#28284e", "tonalRamp": ["#0c0c1d", "#1a1a35", "#292951", "#41416c", "#5e5e88", "#8585aa", "#b7b7ce", "#f0f0f6"] },
+      "green": { "role": "tertiary", "displayName": "Confirmed Green", "canonical": "#11966b", "tonalRamp": ["#032219", "#06432f", "#096446", "#0d855e", "#18a879", "#54c49d", "#9be1c8", "#e7f8f1"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Decisive first-view and final-conversion statements." },
+      "headline": { "displayName": "Headline", "purpose": "Major section arguments and product propositions." },
+      "title": { "displayName": "Title", "purpose": "Benefit, education, and feature-card titles." },
+      "body": { "displayName": "Body", "purpose": "Approachable editorial explanation and support copy." },
+      "label": { "displayName": "Label", "purpose": "Navigation, tabs, categories, links, actions, and evidence labels." }
+    },
+    "shadows": [
+      { "name": "action-lift", "value": "0 0.8rem 2rem rgba(185,35,58,0.22)", "purpose": "Default coral CTA elevation." },
+      { "name": "action-hover", "value": "0 1rem 2.5rem rgba(221,47,73,0.3)", "purpose": "Elevated coral CTA hover response." },
+      { "name": "floating-proof", "value": "0.5rem 1.2rem 2.8rem rgba(16,17,25,0.14)", "purpose": "Quote cards floating around product demonstrations." },
+      { "name": "product-stage", "value": "1rem 2.4rem 5.5rem rgba(15,17,24,0.24)", "purpose": "Main terminal depth on a light field." },
+      { "name": "dark-product-stage", "value": "1rem 2.4rem 5rem rgba(0,0,0,0.34)", "purpose": "Platform-window depth inside an ink stage." },
+      { "name": "sticky-action", "value": "0.5rem 1rem 2.5rem rgba(16,17,25,0.28)", "purpose": "Mobile sticky CTA separation." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Directional movement with a quick, controlled finish." },
+      { "name": "state-fast", "value": "180ms", "purpose": "Skip-link and disclosure feedback." },
+      { "name": "state-standard", "value": "220ms", "purpose": "Buttons, arrows, underlines, and instrument-row feedback." },
+      { "name": "entrance", "value": "320ms", "purpose": "Mobile navigation and sticky CTA entrances." },
+      { "name": "ticker", "value": "36s linear infinite", "purpose": "Continuous illustrative market ticker; pauses on hover or focus." },
+      { "name": "reduced-motion", "value": "0.01ms", "purpose": "Collapses motion and removes ticker translation when reduced motion is requested." }
+    ],
+    "breakpoints": [
+      { "name": "composition", "value": "1120px" },
+      { "name": "stack", "value": "920px" },
+      { "name": "compact", "value": "680px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Coral Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The decisive account or next-step action on light and dark fields.",
+      "html": "<button class=\"ds-btn-primary\">START TRADING <span aria-hidden=\"true\">→</span></button>",
+      "css": ".ds-btn-primary { min-height: 3.35rem; display: inline-flex; align-items: center; justify-content: center; gap: .7rem; border: 1px solid transparent; border-radius: 999px; padding: .85rem 1.55rem; background: var(--coral-action, #d62d47); color: #fff; font: 800 .86rem 'Manrope Variable', Arial, sans-serif; box-shadow: 0 .8rem 2rem rgba(185,35,58,.22); cursor: pointer; transition: transform 220ms cubic-bezier(.16,1,.3,1), background 220ms ease, box-shadow 220ms ease; } .ds-btn-primary span { transition: transform 220ms cubic-bezier(.16,1,.3,1); } .ds-btn-primary:hover { transform: translateY(-2px); background: var(--coral-dark, #b9233a); box-shadow: 0 1rem 2.5rem rgba(221,47,73,.3); } .ds-btn-primary:hover span { transform: translateX(3px); } .ds-btn-primary:focus-visible { outline: 3px solid var(--blue, #138fc4); outline-offset: 4px; } .ds-btn-primary:active { transform: translateY(0); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "A secondary platform-exploration action that stays visually subordinate to coral.",
+      "html": "<button class=\"ds-btn-outline\">EXPLORE THE PLATFORM</button>",
+      "css": ".ds-btn-outline { min-height: 3.35rem; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #cfd1d6; border-radius: 999px; padding: .85rem 1.55rem; background: var(--paper, #fff); color: var(--ink, #101119); font: 800 .86rem 'Manrope Variable', Arial, sans-serif; cursor: pointer; transition: transform 220ms cubic-bezier(.16,1,.3,1), border-color 220ms ease; } .ds-btn-outline:hover { transform: translateY(-2px); border-color: var(--ink, #101119); } .ds-btn-outline:focus-visible { outline: 3px solid var(--blue, #138fc4); outline-offset: 4px; } .ds-btn-outline:active { transform: translateY(0); }"
+    },
+    {
+      "name": "Compact Dark Navigation",
+      "kind": "nav",
+      "description": "Sticky product-studio navigation with restrained labels and a coral account action.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Primary\"><strong>Axquotes</strong><div><a href=\"#\">Markets</a><a href=\"#\">Platform</a><a href=\"#\">Benefits</a></div><button>Create account</button></nav>",
+      "css": ".ds-nav { min-height: 4.65rem; display: flex; align-items: center; gap: 2rem; padding: 0 1.5rem; background: rgba(16,17,25,.96); color: #fff; font-family: 'Manrope Variable', Arial, sans-serif; border-bottom: 1px solid rgba(255,255,255,.1); } .ds-nav strong { margin-right: auto; font-family: 'Sora Variable', Arial, sans-serif; font-size: 1.35rem; } .ds-nav div { display: flex; gap: 2rem; } .ds-nav a { position: relative; padding: .5rem 0; color: #d8dae0; font-size: .78rem; font-weight: 750; text-decoration: none; } .ds-nav a::after { content: ''; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px; background: var(--coral, #ff455f); transition: right 220ms cubic-bezier(.16,1,.3,1); } .ds-nav a:hover::after { right: 0; } .ds-nav button { min-height: 2.65rem; border: 0; border-radius: 999px; padding: .6rem 1.2rem; background: var(--coral-action, #d62d47); color: #fff; font-weight: 800; } .ds-nav a:focus-visible, .ds-nav button:focus-visible { outline: 3px solid var(--blue, #138fc4); outline-offset: 4px; }"
+    },
+    {
+      "name": "Market Tabs",
+      "kind": "custom",
+      "description": "Underline tabs for switching market categories inside an ink product stage.",
+      "html": "<div class=\"ds-tabs\" role=\"tablist\"><button role=\"tab\" aria-selected=\"true\">Forex</button><button role=\"tab\" aria-selected=\"false\">Indices</button><button role=\"tab\" aria-selected=\"false\">Shares</button></div>",
+      "css": ".ds-tabs { display: flex; overflow-x: auto; padding: .9rem 1rem 0; border-bottom: 1px solid #31333d; background: var(--ink, #101119); } .ds-tabs button { flex: 1; min-width: 8rem; border: 0; border-bottom: 2px solid transparent; background: transparent; color: #a9acb5; padding: .8rem 1rem 1rem; font: 800 .75rem 'Manrope Variable', Arial, sans-serif; cursor: pointer; } .ds-tabs button[aria-selected='true'] { border-color: var(--coral, #ff455f); color: #fff; } .ds-tabs button:hover { color: #fff; } .ds-tabs button:focus-visible { outline: 3px solid var(--blue, #138fc4); outline-offset: -3px; }"
+    },
+    {
+      "name": "Instrument Row",
+      "kind": "card",
+      "description": "A compact market-data row used inside product demonstrations.",
+      "html": "<article class=\"ds-instrument\"><span class=\"ds-symbol\">US</span><div><strong>US 500</strong><small>Index</small></div><div class=\"ds-price\"><strong>5,421.4</strong><small>+0.61%</small></div></article>",
+      "css": ".ds-instrument { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .9rem; padding: 1rem; border-radius: .8rem; background: #292b35; color: #fff; font-family: 'Manrope Variable', Arial, sans-serif; transition: transform 220ms cubic-bezier(.16,1,.3,1), background 220ms ease; } .ds-instrument:hover { transform: translateX(4px); background: #30323d; } .ds-instrument:focus-within { outline: 3px solid var(--blue, #138fc4); outline-offset: 4px; } .ds-symbol { width: 2.6rem; height: 2.6rem; display: grid; place-items: center; border-radius: 50%; background: #f4f5f7; color: var(--ink, #101119); font-size: .72rem; font-weight: 900; } .ds-instrument div { display: flex; flex-direction: column; gap: .22rem; } .ds-instrument strong { font-size: .78rem; } .ds-instrument small { color: #9296a2; font-size: .58rem; } .ds-instrument .ds-price { text-align: right; } .ds-instrument .ds-price small { color: var(--green, #11966b); }"
+    },
+    {
+      "name": "Editorial Benefit Card",
+      "kind": "card",
+      "refersTo": "card-editorial",
+      "description": "A flat benefit card with an expressive visual field and disciplined editorial copy.",
+      "html": "<article class=\"ds-benefit\"><div class=\"ds-benefit-visual\"><span aria-hidden=\"true\">↗</span></div><div class=\"ds-benefit-copy\"><small>CASHBACK</small><h3>More activity. More back.</h3><p>Benefits that keep pace as trading activity grows.</p></div></article>",
+      "css": ".ds-benefit { overflow: hidden; display: flex; flex-direction: column; min-height: 29rem; border-radius: 1rem; background: #f5f6f7; color: var(--ink, #101119); font-family: 'Manrope Variable', Arial, sans-serif; } .ds-benefit-visual { min-height: 15rem; display: grid; place-items: center; background: #dff3fb; color: var(--blue-dark, #0b5a89); font: 700 4rem 'Sora Variable', Arial, sans-serif; } .ds-benefit-copy { padding: 2rem; } .ds-benefit-copy small { color: var(--coral-dark, #b9233a); font-size: .62rem; font-weight: 800; letter-spacing: .08em; } .ds-benefit-copy h3 { margin: .8rem 0; font: 700 1.7rem/1.1 'Sora Variable', Arial, sans-serif; letter-spacing: -.025em; } .ds-benefit-copy p { margin: 0; color: var(--muted, #626671); font-size: .82rem; line-height: 1.65; } .ds-benefit:focus-within { outline: 3px solid var(--blue, #138fc4); outline-offset: 4px; }"
+    },
+    {
+      "name": "Market Ticker Cell",
+      "kind": "custom",
+      "description": "A fixed-width, hairline-divided cell for the illustrative scrolling market strip.",
+      "html": "<div class=\"ds-ticker-cell\"><span>EUR/USD</span><strong>1.0842</strong><small>+0.18%</small></div>",
+      "css": ".ds-ticker-cell { width: 12rem; display: grid; grid-template-columns: 1fr auto; gap: .3rem .8rem; padding: 1rem 1.3rem; border: 1px solid var(--line, #dedfe4); background: var(--paper, #fff); color: var(--ink, #101119); font-family: 'Manrope Variable', Arial, sans-serif; } .ds-ticker-cell span, .ds-ticker-cell strong { font-size: .68rem; } .ds-ticker-cell small { grid-column: 2; color: var(--green, #11966b); font-size: .52rem; } .ds-ticker-cell:hover { background: var(--mist, #f3f4f6); } .ds-ticker-cell:focus-visible { outline: 3px solid var(--blue, #138fc4); outline-offset: 4px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Clear Market Desk",
+    "overview": "Axquotes is precise, editorial, approachable, and product-led. It treats the page like a well-organized market desk: generous paper-white fields create room to understand the offer, while concentrated ink-black stages let the platform prove itself with real interface demonstrations. Electric blue makes data and focus legible; coral creates decisive moments of forward motion.\n\nThe system avoids interchangeable broker-card marketing. Breadth, tools, benefits, and education are presented as a paced story—understand the offer, see the platform, verify the evidence, then create an account—with interface imagery carrying more authority than decorative chrome.",
+    "keyCharacteristics": [
+      "Clean editorial fields interrupted by immersive product stages.",
+      "Decisive Sora headlines paired with highly readable Manrope utility text.",
+      "Electric blue for market information and focus; coral for conversion and momentum.",
+      "Rounded, dimensional terminal compositions set against structurally flat content.",
+      "Compact navigation, visible risk context, and repeated but controlled account actions."
+    ],
+    "rules": [
+      { "name": "The Coral Means Move Rule", "body": "Reserve coral for conversion, active choice, and deliberate emphasis; it must never become a generic card-decoration color.", "section": "colors" },
+      { "name": "The Blue Means Information Rule", "body": "Use blue for data, platform state, links to market understanding, and focus—not as a second CTA color.", "section": "colors" },
+      { "name": "The Stage-and-Field Rule", "body": "Paper and mist carry explanation; ink and indigo carry demonstrations, proof, and commitment.", "section": "colors" },
+      { "name": "The Two-Voice Rule", "body": "Sora makes the argument; Manrope explains, labels, and enables the next action.", "section": "typography" },
+      { "name": "The Tight Headline Rule", "body": "Large Sora type uses negative tracking and near-solid leading; do not loosen it into generic marketing typography.", "section": "typography" },
+      { "name": "The Demonstration Survives Rule", "body": "At smaller widths, crop, simplify, and reframe the terminal before replacing it with generic illustration or hiding the product story.", "section": "layout" },
+      { "name": "The Product Earns Depth Rule", "body": "Keep prose and ordinary cards flat; reserve substantial shadows for controls that move and product layers that demonstrate.", "section": "elevation" },
+      { "name": "The Radius Hierarchy Rule", "body": "Large scenes use 1rem, nested content uses 0.8rem, compact terminal controls use 0.35–0.5rem, and only actions or true circular indicators use the pill/circle extreme.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do build pages as a paced editorial story: offer, product proof, breadth and benefits, then account action.",
+      "Do preserve the 1240px shell, asymmetric demonstration layouts, and generous section rhythm.",
+      "Do keep a visible coral account action in decisive conversion moments, especially the first viewport.",
+      "Do use real interface structure—charts, lists, tabs, order states—to explain the platform.",
+      "Do maintain visible 3px blue focus outlines, keyboard-operable controls, risk disclosure, and reduced-motion behavior.",
+      "Do simplify product scenes responsively while preserving their narrative role."
+    ],
+    "donts": [
+      "Don't turn the page into a grid of interchangeable broker feature cards.",
+      "Don't use coral and blue as interchangeable decoration; coral moves, blue informs.",
+      "Don't spread heavy shadows across ordinary editorial content.",
+      "Don't replace product demonstrations with abstract fintech gradients, stock traders, coins, or ornamental market imagery.",
+      "Don't loosen Sora headlines, over-round nested controls, or promote every surface to a floating card.",
+      "Don't present illustrative prices or interface values as live market data or performance claims."
+    ]
+  }
+}
