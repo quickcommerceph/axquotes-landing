@@ -161,8 +161,10 @@ export function SiteHeader() {
               <Globe2 aria-hidden="true" />
               <span>EN</span>
             </button>
-            <SpecularButton href="/auth?tab=login" size="sm" radius={999} {...specularVariants.ghost}>Log in</SpecularButton>
-            <SpecularButton href="/auth" size="sm" radius={999} {...specularVariants.primary}>Create account</SpecularButton>
+            <div className="header-auth-links">
+              <SpecularButton href="/auth?tab=login" size="sm" radius={999} {...specularVariants.ghost}>Log in</SpecularButton>
+              <SpecularButton href="/auth" size="sm" radius={999} {...specularVariants.primary}>Create account</SpecularButton>
+            </div>
             <button
               ref={menuButtonRef}
               className="menu-button"
@@ -186,10 +188,6 @@ export function SiteHeader() {
         inert={!open ? true : undefined}
       >
         <nav className="mobile-navigation-inner site-shell" aria-label="Mobile navigation">
-          <button type="button" className="lang-toggle lang-toggle-mobile" aria-label="Change language">
-            <Globe2 aria-hidden="true" />
-            <span>EN</span>
-          </button>
           <div className="mobile-navigation-links">
             {navigation.map((item, index) => (
               <a
