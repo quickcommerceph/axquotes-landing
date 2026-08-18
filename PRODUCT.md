@@ -35,6 +35,7 @@ One visually clear trading platform that combines broad market access, practical
 - Preserve the supplied Axquotes logo and its blue, coral, white, and black identity.
 - Preserve the current light editorial foundation, bold typography, and trading-terminal visual motif.
 - eToro is a reference for page structure and interaction hierarchy only, never for assets, copy, claims, or branding.
+- **Temporary placeholder-copy allowance (mockup feedback round 1):** several sections (markets intro, control section, footer sitemap) may paraphrase copy in eToro's structural spirit — tone and proportions only — as an interim placeholder until final copy is supplied. This never extends to reproducing eToro's actual text, assets, or branding verbatim; that remains prohibited.
 
 ## Evidence on Hand
 

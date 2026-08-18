@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, Check, ChevronDown, Menu, ShieldAlert, X } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowRight, Check, ChevronDown, Globe2, Menu, ShieldAlert, X } from 'lucide-react';
 import { useInView, useReducedMotion } from 'motion/react';
-import { AxquotesLogo } from './AxquotesLogo';
 import { marketCategories, tickerItems } from './data';
 
 const navigation = [
@@ -141,8 +141,8 @@ export function SiteHeader() {
       </div>
       <header className="site-header">
         <div className="site-shell header-inner">
-          <a href="#top" aria-label="Axquotes home" className="brand-link">
-            <AxquotesLogo className="brand-logo" />
+          <a href="/" aria-label="Axquotes home" className="brand-link">
+            <Image src="/images/axquotes-logo.png" alt="Axquotes" width={422} height={117} className="brand-logo" priority />
           </a>
           <nav className="desktop-navigation" aria-label="Primary navigation">
             {navigation.map((item) => (
@@ -156,8 +156,12 @@ export function SiteHeader() {
             ))}
           </nav>
           <div className="header-actions">
-            <a className="button button-ghost button-small" href="#">Log in</a>
-            <a className="button button-coral button-small" href="#join">Create account</a>
+            <button type="button" className="lang-toggle" aria-label="Change language">
+              <Globe2 aria-hidden="true" />
+              <span>EN</span>
+            </button>
+            <a className="button button-ghost button-small" href="/auth?tab=login">Log in</a>
+            <a className="button button-coral button-small" href="/auth">Create account</a>
             <button
               ref={menuButtonRef}
               className="menu-button"
@@ -181,6 +185,10 @@ export function SiteHeader() {
         inert={!open ? true : undefined}
       >
         <nav className="mobile-navigation-inner site-shell" aria-label="Mobile navigation">
+          <button type="button" className="lang-toggle lang-toggle-mobile" aria-label="Change language">
+            <Globe2 aria-hidden="true" />
+            <span>EN</span>
+          </button>
           <div className="mobile-navigation-links">
             {navigation.map((item, index) => (
               <a
@@ -195,8 +203,8 @@ export function SiteHeader() {
             ))}
           </div>
           <div className="mobile-navigation-actions">
-            <a className="mobile-login" href="#" onClick={closeMenu}>Log in <ArrowRight aria-hidden="true" /></a>
-            <a className="button button-coral" href="#join" onClick={closeMenu}>Create account</a>
+            <a className="mobile-login" href="/auth?tab=login" onClick={closeMenu}>Log in <ArrowRight aria-hidden="true" /></a>
+            <a className="button button-coral" href="/auth" onClick={closeMenu}>Create account</a>
           </div>
         </nav>
       </div>
@@ -324,7 +332,7 @@ export function MobileStickyCta() {
   return (
     <div className="mobile-sticky-cta" data-visible={visible}>
       <div><Check aria-hidden="true" /><span>Ready to make your move?</span></div>
-      <a href="#join">Start trading</a>
+      <a href="/auth">Start trading</a>
     </div>
   );
 }

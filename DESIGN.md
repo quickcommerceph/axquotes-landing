@@ -121,7 +121,7 @@ The palette moves between crisp paper, near-black product environments, electric
 
 ### Secondary
 
-- **Desk Indigo:** A slightly chromatic dark surface reserved for the final account-creation panel, separating it from the neutral terminal stages.
+- **Desk Indigo:** A slightly chromatic dark surface available for product stages that need separation from the neutral ink terminals. The final account-creation panel now sits on a paper-white field with a proof panel instead, per mockup feedback round 1.
 - **Confirmed Green:** Positive movement, market-open state, confirmation, and assurance—not a competing brand accent.
 
 ### Neutral
@@ -225,7 +225,7 @@ Tabs feel like product controls, not pills. They sit on an ink stage with muted 
 
 ### Navigation
 
-The warning strip and header form one persistent ink navigation system. Desktop labels are small, extra-bold Manrope with a coral underline that draws in over 220ms and remains visible for the active section. At 920px the links move into an ink full-screen editorial panel below the chrome, with large touch targets, anchored account actions, focus containment, Escape handling, and locked page scrolling.
+The warning strip and header form one persistent ink navigation system. Desktop labels are small, extra-bold Manrope with a coral underline that draws in over 220ms and remains visible for the active section. At 920px the links move into an ink full-screen editorial panel below the chrome, with large touch targets, anchored account actions, focus containment, Escape handling, and locked page scrolling. A pill-shaped language toggle (globe icon + code) sits ahead of Log in/Create account in both the desktop header and the mobile panel; it is visual only in this build, with no live translation behind it.
 
 ### Market Ticker
 
@@ -234,6 +234,8 @@ The ticker is a white, hairline-bounded strip of fixed-width market cells. It mo
 ### Product Demonstration
 
 Terminal and platform previews are the signature component family. They combine dark nested surfaces, one-pixel grid lines, compact labels, blue chart strokes, coral/blue trade semantics, and restrained perspective. Floating quote, phone, and order-confirmation layers turn the interface into evidence without pretending to show live prices.
+
+The platform section's chart lives inside a phone device frame (device radius, ink bezel, pill notch) rather than a browser window, carrying the same chart/order-filled evidence in a mobile-first frame. The final CTA section pairs a light "member area" deposit-summary card (paper/mist field, hairline dividers, tabular-numeric balances) opposite the account-creation copy — proof-by-demonstration on a light stage instead of the ink/indigo terminal family.
 
 ### Hero Stage
 

@@ -23,7 +23,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body>
+      <body suppressHydrationWarning>
         {/*
           THESIS: Axquotes turns market complexity into forward motion; it refuses the generic broker page made of interchangeable feature cards.
           OWN-WORLD: clean white editorial fields, ink-black product stages, electric blue data, and coral actions built around real interface demonstrations.
