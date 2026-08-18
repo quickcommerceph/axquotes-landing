@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Check, ChevronDown, Eye, EyeOff } from 'lucide-react';
 import { countries, defaultCountryCode } from './countries';
 import { FakeCaptcha } from './FakeCaptcha';
+import SpecularButton, { specularVariants } from './SpecularButton';
 
 type TabId = 'signup' | 'login';
 
@@ -295,7 +296,7 @@ function NewAccountPanel({
           <a href="#">Terms and Conditions</a>, <a href="#">Partnership Agreement</a> and <a href="#">Privacy Policy</a>.
         </p>
 
-        <button type="submit" className="button button-coral">Continue</button>
+        <SpecularButton type="submit" radius={999} {...specularVariants.primary}>Continue</SpecularButton>
         <span className="signup-note">No account flow is connected in this preview.</span>
         <p className="signup-status" role="status" aria-live="polite" data-visible={submitted}>
           {submitted ? 'Preview only — no account was created.' : ''}
@@ -376,7 +377,7 @@ function MemberLoginPanel({
           <p className="signup-forgot"><a href="#">Forgot password?</a></p>
         </div>
 
-        <button type="submit" className="button button-coral">Log in</button>
+        <SpecularButton type="submit" radius={999} {...specularVariants.primary}>Log in</SpecularButton>
         <span className="signup-note">No login flow is connected in this preview.</span>
         <p className="signup-status" role="status" aria-live="polite" data-visible={submitted}>
           {submitted ? 'Preview only — no account session was created.' : ''}

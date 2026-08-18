@@ -121,7 +121,7 @@ The palette moves between crisp paper, near-black product environments, electric
 
 ### Secondary
 
-- **Desk Indigo:** A slightly chromatic dark surface available for product stages that need separation from the neutral ink terminals. The final account-creation panel now sits on a paper-white field with a proof panel instead, per mockup feedback round 1.
+- **Desk Indigo:** A slightly chromatic dark surface available for product stages that need separation from the neutral ink terminals. The final account-creation panel sits on the same ink stage as the rest of the product-proof sections, with a coral-tinted ambient glow marking it as the page's decisive conversion moment.
 - **Confirmed Green:** Positive movement, market-open state, confirmation, and assurance—not a competing brand accent.
 
 ### Neutral
@@ -235,7 +235,7 @@ The ticker is a white, hairline-bounded strip of fixed-width market cells. It mo
 
 Terminal and platform previews are the signature component family. They combine dark nested surfaces, one-pixel grid lines, compact labels, blue chart strokes, coral/blue trade semantics, and restrained perspective. Floating quote, phone, and order-confirmation layers turn the interface into evidence without pretending to show live prices.
 
-The platform section's chart lives inside a phone device frame (device radius, ink bezel, pill notch) rather than a browser window, carrying the same chart/order-filled evidence in a mobile-first frame. The final CTA section pairs a light "member area" deposit-summary card (paper/mist field, hairline dividers, tabular-numeric balances) opposite the account-creation copy — proof-by-demonstration on a light stage instead of the ink/indigo terminal family.
+The platform section's chart lives inside a phone device frame (device radius, ink bezel, pill notch) rather than a browser window, carrying the same chart/order-filled evidence in a mobile-first frame. The final CTA section reuses that same phone frame on an ink stage with a coral ambient glow, pairing the account-summary demonstration (still a light "member area" screen inside the device, matching the platform section's screen treatment) directly against the account-creation copy — proof-by-demonstration on the same dark product stage as the rest of the terminal family.
 
 ### Hero Stage
 

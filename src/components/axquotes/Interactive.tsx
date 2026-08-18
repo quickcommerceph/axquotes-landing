@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { ArrowRight, Check, ChevronDown, Globe2, Menu, ShieldAlert, X } from 'lucide-react';
 import { useInView, useReducedMotion } from 'motion/react';
 import { marketCategories, tickerItems } from './data';
+import SpecularButton, { specularVariants } from './SpecularButton';
 
 const navigation = [
   { label: 'Markets', href: '#markets' },
@@ -142,7 +143,7 @@ export function SiteHeader() {
       <header className="site-header">
         <div className="site-shell header-inner">
           <a href="/" aria-label="Axquotes home" className="brand-link">
-            <Image src="/images/axquotes-logo.png" alt="Axquotes" width={422} height={117} className="brand-logo" priority />
+            <Image src="/images/axquotes-logo.svg" alt="Axquotes" width={422} height={117} className="brand-logo" priority />
           </a>
           <nav className="desktop-navigation" aria-label="Primary navigation">
             {navigation.map((item) => (
@@ -160,8 +161,8 @@ export function SiteHeader() {
               <Globe2 aria-hidden="true" />
               <span>EN</span>
             </button>
-            <a className="button button-ghost button-small" href="/auth?tab=login">Log in</a>
-            <a className="button button-coral button-small" href="/auth">Create account</a>
+            <SpecularButton href="/auth?tab=login" size="sm" radius={999} {...specularVariants.ghost}>Log in</SpecularButton>
+            <SpecularButton href="/auth" size="sm" radius={999} {...specularVariants.primary}>Create account</SpecularButton>
             <button
               ref={menuButtonRef}
               className="menu-button"
@@ -204,7 +205,7 @@ export function SiteHeader() {
           </div>
           <div className="mobile-navigation-actions">
             <a className="mobile-login" href="/auth?tab=login" onClick={closeMenu}>Log in <ArrowRight aria-hidden="true" /></a>
-            <a className="button button-coral" href="/auth" onClick={closeMenu}>Create account</a>
+            <SpecularButton href="/auth" onClick={closeMenu} radius={999} {...specularVariants.primary}>Create account</SpecularButton>
           </div>
         </nav>
       </div>

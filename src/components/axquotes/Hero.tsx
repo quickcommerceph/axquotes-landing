@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { stagger, useAnimate, useInView, useReducedMotion } from 'motion/react';
+import SpecularButton, { specularVariants } from './SpecularButton';
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
@@ -91,8 +92,8 @@ export function Hero() {
           </h1>
           <p className="hero-support">Trade global markets with sharp pricing, powerful tools, and the clarity to act when it matters.</p>
           <div className="hero-actions hero-support">
-            <a className="button button-coral" href="#join">Start trading <ArrowRight aria-hidden="true" /></a>
-            <a className="button button-outline" href="#platform">Explore the platform</a>
+            <SpecularButton href="#join" radius={999} {...specularVariants.primary}>Start trading <ArrowRight aria-hidden="true" /></SpecularButton>
+            <SpecularButton href="#platform" radius={999} {...specularVariants.outline}>Explore the platform</SpecularButton>
           </div>
           <div className="hero-assurance hero-support"><ShieldCheck aria-hidden="true" /><span>17,000+ global markets in one account</span></div>
         </div>

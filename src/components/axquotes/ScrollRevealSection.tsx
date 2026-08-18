@@ -5,7 +5,7 @@ import { type AnimationSequence, stagger, useAnimate, useInView, useReducedMotio
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
-type RevealVariant = 'markets' | 'benefits';
+type RevealVariant = 'markets' | 'benefits' | 'fees' | 'stats' | 'platform' | 'trust' | 'learn' | 'join';
 
 type ScrollRevealSectionProps = {
   id: string;
@@ -14,7 +14,7 @@ type ScrollRevealSectionProps = {
   children: ReactNode;
 };
 
-const variantConfig: Record<RevealVariant, { panelSelector: string; itemSelector?: string }> = {
+const variantConfig: Record<RevealVariant, { panelSelector: string; itemSelector?: string; visualSelector?: string; noteSelector?: string }> = {
   markets: {
     panelSelector: '.section-reveal-panel',
   },
@@ -22,7 +22,40 @@ const variantConfig: Record<RevealVariant, { panelSelector: string; itemSelector
     panelSelector: '.section-reveal-panel',
     itemSelector: '.benefit-panel',
   },
+  fees: {
+    panelSelector: '.section-reveal-panel',
+    itemSelector: '.fee-card',
+    noteSelector: '.fees-note',
+  },
+  stats: {
+    panelSelector: '.section-reveal-panel',
+    itemSelector: '.trust-item',
+  },
+  platform: {
+    panelSelector: '.section-reveal-panel',
+    itemSelector: '.platform-feature',
+    visualSelector: '.section-reveal-visual',
+  },
+  trust: {
+    panelSelector: '.section-reveal-panel',
+    itemSelector: '.trust-card',
+  },
+  learn: {
+    panelSelector: '.section-reveal-panel',
+    itemSelector: '.learning-row',
+    noteSelector: '.learn-hub-link',
+  },
+  join: {
+    panelSelector: '.section-reveal-panel',
+  },
 };
+
+const instantRevealSelector = [
+  '.section-reveal-line-inner',
+  '.section-reveal-support',
+  '.section-reveal-panel',
+  ...new Set(Object.values(variantConfig).flatMap((config) => [config.itemSelector, config.visualSelector, config.noteSelector]).filter(Boolean)),
+].join(', ');
 
 export function ScrollRevealSection({
   id,
@@ -40,7 +73,7 @@ export function ScrollRevealSection({
 
     if (prefersReducedMotion) {
       animate(
-        '.section-reveal-line-inner, .section-reveal-support, .section-reveal-panel, .benefit-panel',
+        instantRevealSelector,
         { clipPath: 'inset(0 0 0% 0)', opacity: 1, y: 0 },
         { duration: 0 },
       );
@@ -78,6 +111,26 @@ export function ScrollRevealSection({
         config.itemSelector,
         { opacity: [0, 1], y: [18, 0] },
         { at: '-0.34', duration: 0.48, delay: stagger(0.08), ease: easeOut },
+      ]);
+    }
+
+    if (config.visualSelector) {
+      sequence.push([
+        config.visualSelector,
+        {
+          clipPath: ['inset(0 0 8% 0)', 'inset(0 0 0% 0)'],
+          opacity: [0, 1],
+          y: [22, 0],
+        },
+        { at: 0, duration: 0.7, ease: easeOut },
+      ]);
+    }
+
+    if (config.noteSelector) {
+      sequence.push([
+        config.noteSelector,
+        { opacity: [0, 1], y: [14, 0] },
+        { at: '-0.15', duration: 0.45, ease: easeOut },
       ]);
     }
 

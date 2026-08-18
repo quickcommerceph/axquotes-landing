@@ -6,17 +6,16 @@ import {
   ArrowUpRight,
   BarChart3,
   BookOpen,
-  Check,
   CircleDollarSign,
   Facebook,
   Globe2,
   GraduationCap,
   Instagram,
+  Landmark,
   LayoutGrid,
   LineChart,
   Linkedin,
   LockKeyhole,
-  MousePointer2,
   ShieldCheck,
   SlidersHorizontal,
   Smartphone,
@@ -25,7 +24,7 @@ import {
   UserRound,
   Users,
   WalletCards,
-  Zap,
+  Youtube,
 } from 'lucide-react';
 import {
   AnimatedStat,
@@ -37,6 +36,7 @@ import {
 } from './Interactive';
 import { Hero } from './Hero';
 import { ScrollRevealSection } from './ScrollRevealSection';
+import SpecularButton, { specularVariants } from './SpecularButton';
 import { tickerItems } from './data';
 
 function TrustStrip() {
@@ -48,16 +48,47 @@ function TrustStrip() {
   ];
 
   return (
-    <section className="trust-strip" aria-label="Axquotes at a glance">
-      <div className="site-shell trust-grid">
+    <ScrollRevealSection className="trust-strip" id="stats" variant="stats">
+      <div className="site-shell trust-grid section-reveal-panel" aria-label="Axquotes at a glance">
         {items.map(({ value, label, icon: Icon }) => (
-          <div key={label}>
+          <div className="trust-item" key={label}>
             <Icon aria-hidden="true" />
             <p><AnimatedStat value={value} /><span>{label}</span></p>
           </div>
         ))}
       </div>
-    </section>
+    </ScrollRevealSection>
+  );
+}
+
+function FeesSection() {
+  const fees = [
+    { value: '$1', title: 'Commission on stocks.', description: 'Unlimited trades. No management fees, ever.' },
+    { value: '0%', title: 'Commission on ETFs.', description: 'Build a diversified portfolio with leading ETFs and zero broker fees.' },
+    { value: 'From 0.3%', title: 'Trade more crypto, pay less.', description: 'Starting at 0.3% for high-volume traders and capped at 1% for everyone.' },
+  ];
+
+  return (
+    <ScrollRevealSection className="section fees-section" id="fees" variant="fees">
+      <div className="site-shell">
+        <div className="fees-intro">
+          <h2>
+            <span className="section-reveal-line"><span className="section-reveal-line-inner">No hidden fees.</span></span>
+            <span className="section-reveal-line"><span className="section-reveal-line-inner section-heading-accent">Just better investing.</span></span>
+          </h2>
+        </div>
+        <div className="fees-grid section-reveal-panel">
+          {fees.map(({ value, title, description }) => (
+            <div className="fee-card" key={title}>
+              <span className="fee-card-value">{value}</span>
+              <h3>{title}</h3>
+              <p>{description}</p>
+            </div>
+          ))}
+        </div>
+        <p className="fees-note">For the complete fee schedule in plain numbers, see the <a href="#">fees page</a>.</p>
+      </div>
+    </ScrollRevealSection>
   );
 }
 
@@ -144,20 +175,44 @@ function PlatformSection() {
     { icon: ShieldCheck, title: 'Control your risk', description: 'Stops, limits, and real-time margin visibility.' },
   ];
 
+  const candles = [
+    { open: 38, close: 46, high: 50, low: 34 },
+    { open: 46, close: 42, high: 49, low: 38 },
+    { open: 42, close: 52, high: 55, low: 40 },
+    { open: 52, close: 48, high: 56, low: 44 },
+    { open: 48, close: 58, high: 60, low: 46 },
+    { open: 58, close: 54, high: 61, low: 50 },
+    { open: 54, close: 62, high: 65, low: 52 },
+    { open: 62, close: 59, high: 66, low: 55 },
+    { open: 59, close: 68, high: 70, low: 57 },
+    { open: 68, close: 64, high: 71, low: 60 },
+    { open: 64, close: 72, high: 75, low: 61 },
+    { open: 72, close: 69, high: 76, low: 65 },
+    { open: 69, close: 78, high: 80, low: 66 },
+    { open: 78, close: 82, high: 85, low: 74 },
+  ];
+
+  const [instrument] = tickerItems;
+
   return (
-    <section className="section platform-section" id="platform">
+    <ScrollRevealSection className="section platform-section" id="platform" variant="platform">
       <div className="site-shell platform-layout">
         <div className="platform-copy">
-          <h2>Know the market.<br /><span>Trade instantly.</span></h2>
-          <p>Fast execution meets serious analysis in a platform that stays clear, even when markets do not.</p>
-          <div className="platform-features">
-            {features.map(({ icon: Icon, title, description }) => (
-              <div key={title}><Icon aria-hidden="true" /><p><strong>{title}</strong><span>{description}</span></p></div>
-            ))}
+          <h2>
+            <span className="section-reveal-line"><span className="section-reveal-line-inner">Know the market.</span></span>
+            <span className="section-reveal-line"><span className="section-reveal-line-inner section-heading-accent">Trade instantly.</span></span>
+          </h2>
+          <p className="section-reveal-support">Fast execution meets serious analysis in a platform that stays clear, even when markets do not.</p>
+          <div className="platform-panel section-reveal-panel">
+            <div className="platform-features">
+              {features.map(({ icon: Icon, title, description }) => (
+                <div className="platform-feature" key={title}><Icon aria-hidden="true" /><p><strong>{title}</strong><span>{description}</span></p></div>
+              ))}
+            </div>
+            <SpecularButton href="#join" radius={999} {...specularVariants.white}>Explore the platform <ArrowRight aria-hidden="true" /></SpecularButton>
           </div>
-          <a className="button button-white" href="#join">Explore the platform <ArrowRight aria-hidden="true" /></a>
         </div>
-        <div className="platform-visual" aria-label="Illustration of the Axquotes app showing a live watchlist on a mobile device">
+        <div className="platform-visual section-reveal-visual" aria-label="Illustration of the Axquotes app showing a live trading chart with buy and sell actions on a mobile device">
           <div className="device-frame device-phone">
             <div className="device-notch" />
             <div className="device-screen">
@@ -166,21 +221,37 @@ function PlatformSection() {
                 <span className="device-balance-pill">0.00 USD</span>
               </div>
               <div className="device-tabs">
-                <span className="active">Favorites</span>
-                <span>Most traded</span>
-                <span>Top movers</span>
+                <span>1D</span>
+                <span className="active">1W</span>
+                <span>1M</span>
+                <span>1Y</span>
               </div>
-              <div className="device-watchlist">
-                {tickerItems.map((item) => (
-                  <div className="device-watchlist-row" key={item.symbol}>
-                    <span className="device-watchlist-symbol">{item.symbol.slice(0, 2)}</span>
-                    <span className="device-watchlist-name">{item.symbol}</span>
-                    <span className="device-watchlist-price">
-                      <strong>{item.price}</strong>
-                      <small className={item.direction === 'up' ? 'positive' : 'negative'}>{item.change}</small>
-                    </span>
+              <div className="device-chart">
+                <div className="device-chart-header">
+                  <div>
+                    <span className="device-chart-symbol">{instrument.symbol}</span>
+                    <strong>{instrument.price}</strong>
                   </div>
-                ))}
+                  <span className={instrument.direction === 'up' ? 'positive' : 'negative'}>{instrument.change}</span>
+                </div>
+                <svg className="device-chart-plot" viewBox="0 0 140 100" preserveAspectRatio="none" aria-hidden="true">
+                  {candles.map(({ open, close, high, low }, index) => {
+                    const up = close >= open;
+                    const cx = index * 10 + 5;
+                    const bodyTop = 100 - Math.max(open, close);
+                    const bodyHeight = Math.max(Math.abs(close - open), 2);
+                    return (
+                      <g key={`candle-${index}`} className={up ? 'candle-up' : 'candle-down'}>
+                        <line x1={cx} x2={cx} y1={100 - high} y2={100 - low} />
+                        <rect x={cx - 3} y={bodyTop} width={6} height={bodyHeight} />
+                      </g>
+                    );
+                  })}
+                </svg>
+                <div className="device-chart-actions">
+                  <button type="button" className="device-chart-sell"><span>Sell</span><strong>5,420.9</strong></button>
+                  <button type="button" className="device-chart-buy"><span>Buy</span><strong>5,421.9</strong></button>
+                </div>
               </div>
               <div className="device-tabbar">
                 <span><LayoutGrid aria-hidden="true" /></span>
@@ -191,24 +262,78 @@ function PlatformSection() {
               </div>
             </div>
           </div>
-          <div className="order-filled"><Check aria-hidden="true" /><div><small>ORDER FILLED</small><strong>US 500</strong><span>1.00 contract at 5,421.4</span></div></div>
         </div>
       </div>
-    </section>
+    </ScrollRevealSection>
+  );
+}
+
+function TrustSection() {
+  const trustCards = [
+    {
+      icon: Landmark,
+      title: 'Regulated entities.',
+      description: 'Wherever you sign up, we answer to local regulators. No exceptions.',
+      tags: ['FCA', 'CySEC', 'ASIC'],
+    },
+    {
+      icon: LockKeyhole,
+      title: 'Your money, held separately',
+      description: 'Segregated accounts at some of the world’s largest banks. Not a cent sits on our balance sheet.',
+      tags: ['Barclays', 'Deutsche', 'BNY Mellon'],
+    },
+    {
+      icon: ShieldCheck,
+      title: 'Investor protection.',
+      description: 'Our clients are protected up to £85,000, and in some cases up to $1,000,000.',
+      tags: ['FSCS', 'ICF', 'Lloyd’s of London'],
+    },
+  ];
+
+  return (
+    <ScrollRevealSection className="section trust-section" id="trust" variant="trust">
+      <div className="site-shell">
+        <h2 className="trust-heading">
+          <span className="section-reveal-line"><span className="section-reveal-line-inner">Trusted by 40M+ users. Obviously.</span></span>
+        </h2>
+        <div className="trust-cards section-reveal-panel">
+          {trustCards.map(({ icon: Icon, title, description, tags }) => (
+            <div className="trust-card" key={title}>
+              <span className="trust-card-icon"><Icon aria-hidden="true" /></span>
+              <h3>{title}</h3>
+              <p>{description}</p>
+              <div className="trust-card-tags">
+                {tags.map((tag) => <span key={tag}>{tag}</span>)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </ScrollRevealSection>
   );
 }
 
 function LearnSection() {
   return (
-    <section className="section learn-section" id="learn">
+    <ScrollRevealSection className="section learn-section" id="learn" variant="learn">
       <div className="site-shell">
         <div className="section-intro split-intro">
-          <div><h2>Learn the market.<br />Then make your move.</h2></div>
-          <div><p>Build practical confidence with timely analysis, clear foundations, and focused platform guides.</p><a href="#">Visit the learning hub <ArrowRight aria-hidden="true" /></a></div>
+          <div>
+            <h2>
+              <span className="section-reveal-line"><span className="section-reveal-line-inner">Learn the market.</span></span>
+              <span className="section-reveal-line"><span className="section-reveal-line-inner">Then make <span className="section-heading-accent">your move.</span></span></span>
+            </h2>
+          </div>
+          <div><p className="section-reveal-support">Build practical confidence with timely analysis, clear foundations, and focused platform guides.</p><a href="#" className="learn-hub-link">Visit the learning hub <ArrowRight aria-hidden="true" /></a></div>
         </div>
-        <div className="learning-layout">
+        <div className="learning-layout section-reveal-panel">
           <article className="learning-feature">
-            <div className="learning-radar"><span /><span /><span /><LineChart aria-hidden="true" /></div>
+            <Image
+              src="/images/market-briefing.webp"
+              alt="Stock market trend line and volume chart"
+              fill
+              sizes="(max-width: 1120px) 100vw, 60vw"
+            />
             <div><span>Daily briefing · 6 min</span><h3>What is moving markets today?</h3><p>Your morning read on overnight moves, key levels, and the events ahead.</p><a href="#">Read the briefing <ArrowRight aria-hidden="true" /></a></div>
           </article>
           <div className="learning-stack">
@@ -217,32 +342,78 @@ function LearnSection() {
           </div>
         </div>
       </div>
-    </section>
+    </ScrollRevealSection>
+  );
+}
+
+const footerSocialLinks = [
+  { label: 'X', Icon: Twitter },
+  { label: 'Instagram', Icon: Instagram },
+  { label: 'LinkedIn', Icon: Linkedin },
+  { label: 'Facebook', Icon: Facebook },
+  { label: 'YouTube', Icon: Youtube },
+];
+
+function AppleGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+      <path d="M16.7 12.6c0-2.1 1.7-3.2 1.8-3.2-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.5.8-3.1.8-.6 0-1.6-.7-2.7-.7-1.4 0-2.7.8-3.4 2-1.4 2.5-.4 6.2 1.1 8.3.7 1 1.5 2.1 2.6 2.1 1 0 1.4-.7 2.7-.7s1.6.7 2.7.6c1.1 0 1.8-1 2.5-2 .8-1.2 1.1-2.3 1.1-2.4-.1-.1-2.2-.9-2.3-3.2Z" />
+      <path d="M14.4 6.1c.6-.7 1-1.7.9-2.7-.9.1-1.9.6-2.5 1.3-.6.6-1 1.6-.9 2.6.9.1 1.9-.5 2.5-1.2Z" />
+    </svg>
+  );
+}
+
+function PlayGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+      <path d="M5 3.6c0-.6.7-1 1.2-.7l13 8.4c.5.3.5 1 0 1.4l-13 8.4c-.5.3-1.2 0-1.2-.7V3.6Z" />
+    </svg>
   );
 }
 
 export function SiteFooter() {
   const groups = [
-    { title: 'Markets', links: ['Forex', 'Indices', 'Shares', 'Commodities', 'Cryptocurrencies'] },
+    { title: 'Invest', links: ['Forex', 'Indices', 'Shares', 'Commodities', 'Cryptocurrencies'] },
     { title: 'Platform', links: ['Web trading', 'Mobile app', 'Pricing', 'Trading hours'] },
     { title: 'Learn', links: ['Trading academy', 'Market analysis', 'News and insights', 'Glossary'] },
-    { title: 'Company', links: ['About Axquotes', 'Careers', 'Contact', 'Affiliates'] },
+    { title: 'Company', links: ['About Axquotes', 'Careers', 'Contact'] },
+    { title: 'Legal', links: ['Regulation', 'Privacy Policy', 'Terms & Conditions', 'Cookie Policy'] },
+    { title: 'Partners', links: ['Affiliate Program', 'Invite a Friend', 'Partner Network'] },
   ];
 
   return (
     <footer className="site-footer" id="company">
       <div className="site-shell">
-        <div className="footer-lead">
-          <p>Markets move. Move with them.</p>
-          <a className="button button-coral" href="/auth">Create account</a>
-        </div>
-        <div className="footer-navigation">
-          {groups.map((group) => (
-            <div className="footer-group desktop-footer-group" key={group.title}>
-              <h3>{group.title}</h3>
-              {group.links.map((link) => <a href="#" key={link}>{link}</a>)}
+        <div className="footer-top">
+          <div className="footer-brand">
+            <p>A market intelligence platform giving 400k+ active traders access to 17,000+ global markets.</p>
+            <div className="footer-social">
+              <span>Find us on</span>
+              <div className="footer-social-icons">
+                {footerSocialLinks.map(({ label, Icon }) => (
+                  <a href="#" key={label} aria-label={`Axquotes on ${label}`}><Icon aria-hidden="true" /></a>
+                ))}
+              </div>
             </div>
-          ))}
+            <div className="footer-app-badges">
+              <a href="#" className="footer-app-badge">
+                <AppleGlyph />
+                <span><small>Download on the</small>App Store</span>
+              </a>
+              <a href="#" className="footer-app-badge">
+                <PlayGlyph />
+                <span><small>GET IT ON</small>Google Play</span>
+              </a>
+            </div>
+          </div>
+          <div className="footer-link-grid desktop-footer-group">
+            {groups.map((group) => (
+              <div className="footer-group" key={group.title}>
+                <h3>{group.title}</h3>
+                {group.links.map((link) => <a href="#" key={link}>{link}</a>)}
+              </div>
+            ))}
+          </div>
           <div className="mobile-footer-groups">
             {groups.map((group) => (
               <FooterDisclosure title={group.title} key={group.title}>
@@ -255,7 +426,7 @@ export function SiteFooter() {
           <p>CFDs are complex instruments and come with a high risk of losing money rapidly due to leverage. You should consider whether you understand how CFDs work and whether you can afford to take the high risk of losing your money.</p>
           <p>The market prices and account values shown on this page are illustrative interface examples and do not represent live prices or investment performance.</p>
         </div>
-        <div className="footer-bottom"><span>© 2026 Axquotes. All rights reserved.</span><div><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div>
+        <div className="footer-bottom text-center"><span>© 2026 Axquotes. All rights reserved.</span></div>
       </div>
     </footer>
   );
@@ -270,6 +441,7 @@ export function LandingPage() {
         <div className="markets-stage">
           <MarketTicker />
           <TrustStrip />
+          <FeesSection />
 
           <ScrollRevealSection className="section markets-section" id="markets" variant="markets">
             <div className="site-shell">
@@ -290,53 +462,67 @@ export function LandingPage() {
         <BenefitsSection />
         <PlatformSection />
 
-        <section className="section control-section">
-          <div className="site-shell control-layout">
-            <div className="control-copy">
-              <h2>Confidence comes from control.</h2>
-              <p>See your positions, limits, and exposure clearly, so every decision stays deliberate, from your first trade to your last.</p>
-            </div>
-            <div className="control-list">
-              <div><Zap aria-hidden="true" /><p><strong>Move without friction</strong><span>Fast, focused execution when timing matters.</span></p></div>
-              <div><LockKeyhole aria-hidden="true" /><p><strong>Know your exposure</strong><span>Stops, limits, and margin information stay close.</span></p></div>
-              <div><MousePointer2 aria-hidden="true" /><p><strong>Keep the screen clear</strong><span>Useful detail without unnecessary noise.</span></p></div>
-              <div><WalletCards aria-hidden="true" /><p><strong>One connected account</strong><span>Markets, positions, and insights move together.</span></p></div>
-            </div>
-          </div>
-        </section>
+        <TrustSection />
 
         <LearnSection />
 
-        <section className="join-section" id="join">
+        <ScrollRevealSection className="join-section" id="join" variant="join">
           <div className="site-shell join-panel">
-            <div className="join-visual" aria-label="Illustration of an Axquotes member account showing a deposit balance">
-              <div className="deposit-card">
-                <div className="deposit-card-header"><span>Standard account</span><WalletCards aria-hidden="true" /></div>
-                <div className="deposit-card-tags"><span>Real</span><span>MT5</span><span>Standard</span></div>
-                <div className="deposit-card-balance"><small>Account balance</small><strong>$24,500.00</strong></div>
-                <div className="deposit-card-actions">
-                  <div><span><SlidersHorizontal aria-hidden="true" /></span><small>Trade</small></div>
-                  <div><span className="coral"><ArrowDownToLine aria-hidden="true" /></span><small>Deposit</small></div>
-                  <div><span><ArrowUpRight aria-hidden="true" /></span><small>Withdraw</small></div>
-                  <div><span><ArrowLeftRight aria-hidden="true" /></span><small>Transfer</small></div>
+            <div className="join-visual section-reveal-panel" aria-label="Illustration of the Axquotes app showing a standard account balance and quick actions on a mobile device">
+              <div className="device-frame device-phone">
+                <div className="device-notch" />
+                <div className="device-screen">
+                  <div className="device-app-bar">
+                    <span>Account</span>
+                    <WalletCards aria-hidden="true" className="device-app-icon" />
+                  </div>
+                  <div className="device-tabs">
+                    <span className="active">Standard</span>
+                    <span>Pro</span>
+                    <span>VIP</span>
+                  </div>
+                  <div className="device-account">
+                    <div className="device-chart-header device-account-header">
+                      <div>
+                        <span className="device-chart-symbol">Account balance</span>
+                        <strong>$24,500.00</strong>
+                      </div>
+                      <span className="positive">+2.4%</span>
+                    </div>
+                    <div className="device-account-metrics">
+                      <div><span>Equity</span><strong>$24,712</strong></div>
+                      <div><span>Margin</span><strong className="positive">482%</strong></div>
+                      <div><span>Free</span><strong>$23,940</strong></div>
+                    </div>
+                    <div className="device-account-actions">
+                      <div><span><SlidersHorizontal aria-hidden="true" /></span><small>Trade</small></div>
+                      <div><span className="coral"><ArrowDownToLine aria-hidden="true" /></span><small>Deposit</small></div>
+                      <div><span><ArrowUpRight aria-hidden="true" /></span><small>Withdraw</small></div>
+                      <div><span><ArrowLeftRight aria-hidden="true" /></span><small>Transfer</small></div>
+                    </div>
+                  </div>
+                  <div className="device-tabbar">
+                    <span><LayoutGrid aria-hidden="true" /></span>
+                    <span><LineChart aria-hidden="true" /></span>
+                    <span><Globe2 aria-hidden="true" /></span>
+                    <span><BarChart3 aria-hidden="true" /></span>
+                    <span className="active"><UserRound aria-hidden="true" /></span>
+                  </div>
                 </div>
               </div>
             </div>
             <div className="join-copy">
-              <Sparkles aria-hidden="true" />
-              <h2>Ready when<br /><span>you are.</span></h2>
-              <p>Open your account, find your market, and take your next step with a platform built to keep the picture clear.</p>
-              <a className="button button-coral" href="/auth">Create your account <ArrowRight aria-hidden="true" /></a>
-              <span className="join-note">No account flow is connected in this preview.</span>
-              <div className="social-links" aria-label="Axquotes on social media">
-                <a href="#" aria-label="Axquotes on X"><Twitter aria-hidden="true" /></a>
-                <a href="#" aria-label="Axquotes on Instagram"><Instagram aria-hidden="true" /></a>
-                <a href="#" aria-label="Axquotes on LinkedIn"><Linkedin aria-hidden="true" /></a>
-                <a href="#" aria-label="Axquotes on Facebook"><Facebook aria-hidden="true" /></a>
+              <h2>
+                <span className="section-reveal-line"><span className="section-reveal-line-inner">Ready when</span></span>
+                <span className="section-reveal-line"><span className="section-reveal-line-inner section-heading-accent">you are.</span></span>
+              </h2>
+              <p className="section-reveal-support mb-8">Open your account, find your market, and take your next step with a platform built to keep the picture clear.</p>
+              <div className="join-actions pt-2 section-reveal-panel">
+                <SpecularButton href="/auth" radius={999} {...specularVariants.primary}>Create your account <ArrowRight aria-hidden="true" /></SpecularButton>
               </div>
             </div>
           </div>
-        </section>
+        </ScrollRevealSection>
       </main>
       <SiteFooter />
       <MobileStickyCta />
