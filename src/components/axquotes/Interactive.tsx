@@ -7,11 +7,62 @@ import { useInView, useReducedMotion } from 'motion/react';
 import { marketCategories, tickerItems } from './data';
 import SpecularButton, { specularVariants } from './SpecularButton';
 
-const navigation = [
-  { label: 'Markets', href: '#markets' },
-  { label: 'Platform', href: '#platform' },
-  { label: 'Benefits', href: '#benefits' },
-  { label: 'Learn', href: '#learn' },
+type NavLink = { label: string; href: string };
+type NavItem = { label: string; href: string; dropdown: { heading: string; links: NavLink[] } };
+
+const navigation: NavItem[] = [
+  {
+    label: 'Markets',
+    href: '#markets',
+    dropdown: {
+      heading: 'Invest',
+      links: [
+        { label: 'Forex', href: '#' },
+        { label: 'Indices', href: '#' },
+        { label: 'Shares', href: '#' },
+        { label: 'Commodities', href: '#' },
+        { label: 'Cryptocurrencies', href: '#' },
+      ],
+    },
+  },
+  {
+    label: 'Benefits',
+    href: '#benefits',
+    dropdown: {
+      heading: 'Benefits',
+      links: [
+        { label: 'Cashback', href: '#' },
+        { label: 'Referral rewards', href: '#' },
+        { label: 'Volume rebates', href: '#' },
+      ],
+    },
+  },
+  {
+    label: 'Platform',
+    href: '#platform',
+    dropdown: {
+      heading: 'Platform',
+      links: [
+        { label: 'Web trading', href: '#' },
+        { label: 'Mobile app', href: '#' },
+        { label: 'Pricing', href: '#' },
+        { label: 'Trading hours', href: '#' },
+      ],
+    },
+  },
+  {
+    label: 'Learn',
+    href: '#learn',
+    dropdown: {
+      heading: 'Learn',
+      links: [
+        { label: 'Trading academy', href: '#' },
+        { label: 'Market analysis', href: '#' },
+        { label: 'News and insights', href: '#' },
+        { label: 'Glossary', href: '#' },
+      ],
+    },
+  },
 ];
 
 export function AnimatedStat({ value }: { value: string }) {
@@ -55,9 +106,40 @@ export function AnimatedStat({ value }: { value: string }) {
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [activeHref, setActiveHref] = useState<string | null>(null);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
   const mobileNavigationRef = useRef<HTMLDivElement>(null);
+  const desktopNavigationRef = useRef<HTMLElement>(null);
+  const dropdownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearDropdownTimer = () => {
+    if (dropdownTimerRef.current) {
+      clearTimeout(dropdownTimerRef.current);
+      dropdownTimerRef.current = null;
+    }
+  };
+
+  const scheduleDropdown = (label: string | null, delay: number) => {
+    clearDropdownTimer();
+    dropdownTimerRef.current = setTimeout(() => setOpenDropdown(label), delay);
+  };
+
+  useEffect(() => () => clearDropdownTimer(), []);
+
+  useEffect(() => {
+    if (!openDropdown) return;
+
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (!desktopNavigationRef.current?.contains(event.target as Node)) {
+        clearDropdownTimer();
+        setOpenDropdown(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, [openDropdown]);
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
@@ -66,6 +148,20 @@ export function SiteHeader() {
       document.body.style.overflow = '';
     };
   }, [open]);
+
+  useEffect(() => {
+    if (!openDropdown) return;
+
+    const handleDropdownEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        clearDropdownTimer();
+        setOpenDropdown(null);
+      }
+    };
+
+    document.addEventListener('keydown', handleDropdownEscape);
+    return () => document.removeEventListener('keydown', handleDropdownEscape);
+  }, [openDropdown]);
 
   useEffect(() => {
     if (!open) return;
@@ -102,6 +198,8 @@ export function SiteHeader() {
     const desktopQuery = window.matchMedia('(min-width: 921px)');
     const closeAtDesktop = (event: MediaQueryListEvent) => {
       if (event.matches) setOpen(false);
+      clearDropdownTimer();
+      setOpenDropdown(null);
     };
 
     desktopQuery.addEventListener('change', closeAtDesktop);
@@ -145,16 +243,45 @@ export function SiteHeader() {
           <a href="/" aria-label="Axquotes home" className="brand-link">
             <Image src="/images/axquotes-logo.svg" alt="Axquotes" width={422} height={117} className="brand-logo" priority />
           </a>
-          <nav className="desktop-navigation" aria-label="Primary navigation">
-            {navigation.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                aria-current={activeHref === item.href ? 'location' : undefined}
-              >
-                {item.label}
-              </a>
-            ))}
+          <nav className="desktop-navigation" aria-label="Primary navigation" ref={desktopNavigationRef}>
+            {navigation.map((item) => {
+              const isOpen = openDropdown === item.label;
+              const dropdownId = `nav-dropdown-${item.label.toLowerCase()}`;
+
+              return (
+                <div
+                  key={item.href}
+                  className="nav-item"
+                  onMouseEnter={() => {
+                    if (window.matchMedia('(hover: hover)').matches) scheduleDropdown(item.label, 150);
+                  }}
+                  onMouseLeave={() => {
+                    if (window.matchMedia('(hover: hover)').matches) scheduleDropdown(null, 180);
+                  }}
+                >
+                  <button
+                    type="button"
+                    className="nav-item-trigger"
+                    aria-expanded={isOpen}
+                    aria-haspopup="true"
+                    aria-controls={dropdownId}
+                    onClick={() => {
+                      clearDropdownTimer();
+                      setOpenDropdown((current) => (current === item.label ? null : item.label));
+                    }}
+                  >
+                    {item.label}
+                    <ChevronDown aria-hidden="true" />
+                  </button>
+                  <div id={dropdownId} className="nav-dropdown" role="menu" aria-label={`${item.label} menu`} data-open={isOpen}>
+                    <span className="nav-dropdown-heading">{item.dropdown.heading}</span>
+                    {item.dropdown.links.map((link) => (
+                      <a key={link.label} href={link.href} role="menuitem">{link.label}</a>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </nav>
           <div className="header-actions">
             <button type="button" className="lang-toggle" aria-label="Change language">
@@ -180,6 +307,15 @@ export function SiteHeader() {
         </div>
       </header>
       <div
+        className="nav-scrim"
+        data-open={Boolean(openDropdown)}
+        aria-hidden="true"
+        onClick={() => {
+          clearDropdownTimer();
+          setOpenDropdown(null);
+        }}
+      />
+      <div
         ref={mobileNavigationRef}
         id="mobile-navigation"
         className="mobile-navigation"
@@ -190,15 +326,26 @@ export function SiteHeader() {
         <nav className="mobile-navigation-inner site-shell" aria-label="Mobile navigation">
           <div className="mobile-navigation-links">
             {navigation.map((item, index) => (
-              <a
-                key={item.href}
-                href={item.href}
-                ref={index === 0 ? firstMobileLinkRef : undefined}
-                aria-current={activeHref === item.href ? 'location' : undefined}
-                onClick={closeMenu}
-              >
-                {item.label}<ArrowRight aria-hidden="true" />
-              </a>
+              <details className="mobile-nav-disclosure" key={item.href}>
+                <summary aria-current={activeHref === item.href ? 'location' : undefined}>
+                  <a
+                    href={item.href}
+                    ref={index === 0 ? firstMobileLinkRef : undefined}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      closeMenu();
+                    }}
+                  >
+                    {item.label}
+                  </a>
+                  <ChevronDown aria-hidden="true" />
+                </summary>
+                <div>
+                  {item.dropdown.links.map((link) => (
+                    <a key={link.label} href={link.href} onClick={closeMenu}>{link.label}</a>
+                  ))}
+                </div>
+              </details>
             ))}
           </div>
           <div className="mobile-navigation-actions">
