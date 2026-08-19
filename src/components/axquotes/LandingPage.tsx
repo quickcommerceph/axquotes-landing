@@ -370,7 +370,7 @@ function TrustSection() {
     <ScrollRevealSection className="section trust-section" id="trust" variant="trust">
       <div className="site-shell">
         <h2 className="trust-heading">
-          <span className="section-reveal-line"><span className="section-reveal-line-inner">Trusted by 40M+ users. Obviously.</span></span>
+          <span className="section-reveal-line"><span className="section-reveal-line-inner">Trusted by 40M+ users. <span className="section-heading-accent">Obviously.</span></span></span>
         </h2>
         <div className="trust-cards section-reveal-panel">
           {trustCards.map(({ icon: Icon, title, description, tags }) => (
