@@ -92,7 +92,7 @@ export function Hero() {
           </h1>
           <p className="hero-support">Trade global markets with sharp pricing, powerful tools, and the clarity to act when it matters.</p>
           <div className="hero-actions hero-support">
-            <SpecularButton href="#join" radius={999} {...specularVariants.primary}>Start trading <ArrowRight aria-hidden="true" /></SpecularButton>
+            <SpecularButton href="#join" radius={999} {...specularVariants.primary}>Start Trading <ArrowRight aria-hidden="true" /></SpecularButton>
             <SpecularButton href="#platform" radius={999} {...specularVariants.outline}>Explore the platform</SpecularButton>
           </div>
           <div className="hero-assurance hero-support"><ShieldCheck aria-hidden="true" /><span>17,000+ global markets in one account</span></div>

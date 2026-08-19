@@ -5,6 +5,15 @@ import { Renderer, Program, Mesh, Triangle, Color } from 'ogl';
 
 const PAD = 20;
 
+function hexToRgba(hex: string, alpha: number): string {
+  const value = hex.replace('#', '');
+  const full = value.length === 3 ? value.split('').map((c) => c + c).join('') : value;
+  const r = parseInt(full.slice(0, 2), 16);
+  const g = parseInt(full.slice(2, 4), 16);
+  const b = parseInt(full.slice(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
 const SIZES = {
   sm: 'text-[0.85rem] px-[22px] py-[10px]',
   md: 'text-[1rem] px-[30px] py-[14px]',
@@ -140,7 +149,6 @@ const SpecularButton = ({
   radius = 18,
   tint = '#ffffff',
   tintOpacity = 0,
-  blur = 0,
   textColor = '#f5f5f5',
   lineColor = '#ffffff',
   baseColor = '#525252',
@@ -327,14 +335,13 @@ const SpecularButton = ({
     };
   }, []);
 
-  const buttonClassName = `relative m-0 inline-flex cursor-pointer items-center justify-center border-none font-medium leading-none tracking-[0.01em] outline-none transition-transform duration-150 active:scale-[0.97] disabled:cursor-default disabled:opacity-55 disabled:active:scale-100 [color:var(--sb-text-color)] [border-radius:var(--sb-radius)] [background:color-mix(in_srgb,var(--sb-tint)_calc(var(--sb-tint-opacity)*100%),transparent)] [backdrop-filter:blur(var(--sb-blur))] shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_8px_24px_rgba(0,0,0,0.25)] focus-visible:outline-2 focus-visible:outline-offset-[3px] ${SIZES[size] || SIZES.md}${className ? ` ${className}` : ''}`;
+  const buttonClassName = `relative m-0 inline-flex cursor-pointer items-center justify-center border-none font-medium leading-none tracking-[0.01em] outline-none transition-transform duration-150 active:scale-[0.97] disabled:cursor-default disabled:opacity-55 disabled:active:scale-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_8px_24px_rgba(0,0,0,0.25)] focus-visible:outline-2 focus-visible:outline-offset-[3px] ${SIZES[size] || SIZES.md}${className ? ` ${className}` : ''}`;
 
   const style = {
-    '--sb-radius': `${radius}px`,
-    '--sb-tint': tint,
-    '--sb-tint-opacity': tintOpacity,
-    '--sb-blur': `${blur}px`,
-    '--sb-text-color': textColor,
+    borderRadius: `${radius}px`,
+    background: hexToRgba(tint, tintOpacity),
+    color: textColor,
+    isolation: 'isolate',
   } as CSSProperties;
 
   const overlay = (

@@ -6,6 +6,8 @@ The app currently has Tailwind v4 installed and wired up (`@import 'tailwindcss'
 
 This is a full-surface rewrite touching all 6 components under `src/components/axquotes/`, `src/app/layout.tsx`, `src/app/auth/page.tsx`, and `src/app/globals.css` (~1,500 lines of components, 622 lines of CSS). Two Explore agents plus direct reads of every file confirmed: it's a clean 100% custom-CSS codebase today (the one pre-existing exception is `scroll-smooth` on `<html>` in `layout.tsx`), and there is one significant architectural coupling that shapes the whole plan — see below.
 
+**Update (post-plan audit):** `SpecularButton.tsx` (WebGL specular-highlight button, `src/components/axquotes/SpecularButton.tsx`) was added after this plan was written and now renders every CTA in the app (`Hero.tsx`, `Interactive.tsx`, `LandingPage.tsx`, `SignUpForm.tsx`). It's already written entirely in Tailwind utility classes/arbitrary values (`text-[0.85rem]`, bracket `color-mix()`, etc.) — treat it as the reference pattern for arbitrary-value style elsewhere in this migration. It does not need migrating, but it does mean the old `.button`/`.button-coral` CSS system is now dead code — see the Foundation phase note below.
+
 ## The load-bearing constraint: Motion's class-selector animation targeting
 
 `Hero.tsx` and `ScrollRevealSection.tsx` both use Motion's `animate()` with **literal CSS class-name strings** as selectors — not refs:
@@ -43,7 +45,7 @@ Currently `@theme` only defines 3 colors + 2 fonts, while `:root` defines the fu
 
 Each phase is migrated then checked live via `npm run dev` before moving to the next, since this is a highly detailed, pixel-specific design (fluid `clamp()` type, precise gradients/shadows, exact spacing) where regressions are easy to introduce silently.
 
-1. **Foundation** — rewrite `globals.css`: full `@theme` token set, custom breakpoints, the `@layer components` animation-hook classes and `site-shell`/`button` hook, keyframes, and the documented exceptions list above. Nothing else changes yet (components still reference old + new class names side by side is not viable — so this phase lands together with phase 2 for the shared primitives: `.site-shell`, `.button` + modifiers, `.section`, `positive`/`negative`, `sr-only`, `skip-link`).
+1. **Foundation** — rewrite `globals.css`: full `@theme` token set, custom breakpoints, the `@layer components` animation-hook classes and `site-shell` hook, keyframes, and the documented exceptions list above. Nothing else changes yet (components still reference old + new class names side by side is not viable — so this phase lands together with phase 2 for the shared primitives: `.site-shell`, `.section`, `positive`/`negative`, `sr-only`, `skip-link`). Also **delete** 6 confirmed-dead rules rather than migrating them (a full dead-selector audit cross-checked every class in `globals.css` against every `className` across the components, including template-literal-built names): the 3 orphaned `.button` rules left over from the `SpecularButton` migration (`.join-copy .button` — line 431, `.signup-card .button-coral` — line 499, `.hero-actions .button` — line 592), plus 3 unrelated pre-existing leftovers (`.centered-intro` + its `p` rule — lines 219-220, `.join-note` — line 432, `.login-link` — line 553, from before the header "Log in" link became a `SpecularButton`).
 2. **Chrome** — `layout.tsx` (skip link), `Interactive.tsx`'s `SiteHeader` (risk bar, sticky header, desktop/mobile nav, `data-open` mobile panel), `MobileStickyCta`, `FooterDisclosure`.
 3. **Hero** — `Hero.tsx` (video/scrim layout, headline reveal hook classes, CTA buttons, assurance line).
 4. **Markets** — `MarketTicker` + `MarketExplorer` in `Interactive.tsx` (ticker marquee/keyframe, tabs with `aria-selected`, instrument list), plus `TrustStrip` and `FeesSection` in `LandingPage.tsx`.
@@ -58,6 +60,7 @@ Each phase is migrated then checked live via `npm run dev` before moving to the 
 - `src/app/layout.tsx`, `src/app/auth/page.tsx`
 - `src/components/axquotes/Hero.tsx`, `Interactive.tsx`, `LandingPage.tsx`, `ScrollRevealSection.tsx` (className values only — no logic changes), `SignUpForm.tsx`, `FakeCaptcha.tsx`
 - `data.ts` / `countries.ts` are pure data modules, not touched
+- `SpecularButton.tsx` — reference-only (already Tailwind, not edited)
 
 ## Verification
 

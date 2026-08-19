@@ -14,7 +14,7 @@ type ScrollRevealSectionProps = {
   children: ReactNode;
 };
 
-const variantConfig: Record<RevealVariant, { panelSelector: string; itemSelector?: string; visualSelector?: string; noteSelector?: string }> = {
+const variantConfig: Record<RevealVariant, { panelSelector: string; itemSelector?: string; deviceSelector?: string; noteSelector?: string }> = {
   markets: {
     panelSelector: '.section-reveal-panel',
   },
@@ -34,7 +34,7 @@ const variantConfig: Record<RevealVariant, { panelSelector: string; itemSelector
   platform: {
     panelSelector: '.section-reveal-panel',
     itemSelector: '.platform-feature',
-    visualSelector: '.section-reveal-visual',
+    deviceSelector: '.device-slot',
   },
   trust: {
     panelSelector: '.section-reveal-panel',
@@ -54,7 +54,7 @@ const instantRevealSelector = [
   '.section-reveal-line-inner',
   '.section-reveal-support',
   '.section-reveal-panel',
-  ...new Set(Object.values(variantConfig).flatMap((config) => [config.itemSelector, config.visualSelector, config.noteSelector]).filter(Boolean)),
+  ...new Set(Object.values(variantConfig).flatMap((config) => [config.itemSelector, config.deviceSelector, config.noteSelector]).filter(Boolean)),
 ].join(', ');
 
 export function ScrollRevealSection({
@@ -114,15 +114,11 @@ export function ScrollRevealSection({
       ]);
     }
 
-    if (config.visualSelector) {
+    if (config.deviceSelector) {
       sequence.push([
-        config.visualSelector,
-        {
-          clipPath: ['inset(0 0 8% 0)', 'inset(0 0 0% 0)'],
-          opacity: [0, 1],
-          y: [22, 0],
-        },
-        { at: 0, duration: 0.7, ease: easeOut },
+        config.deviceSelector,
+        { opacity: [0, 1], y: [22, 0] },
+        { at: '-0.1', duration: 0.5, delay: stagger(0.16, { from: 'center' }), ease: easeOut },
       ]);
     }
 

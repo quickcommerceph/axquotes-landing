@@ -36,7 +36,7 @@ import {
 } from './Interactive';
 import { Hero } from './Hero';
 import { ScrollRevealSection } from './ScrollRevealSection';
-import SpecularButton, { specularVariants } from './SpecularButton';
+import SpecularButton from './SpecularButton';
 import { tickerItems } from './data';
 
 function TrustStrip() {
@@ -112,7 +112,7 @@ function BenefitsSection() {
       value: 'Referral rewards',
       title: 'Trading is better with company.',
       description: 'Invite a friend and you can both earn a trading reward.',
-      cta: 'Register now',
+      cta: 'Read more',
       tone: 'blue',
       image: {
         src: '/images/referral-collaboration.webp',
@@ -163,8 +163,72 @@ function BenefitsSection() {
             ))}
           </div>
         </div>
+        <div className="benefits-register section-reveal-panel">
+          <SpecularButton href="/auth" radius={999} tint="#d62d47" tintOpacity={0.15} baseColor="#d62d47" lineColor="#ffffff" textColor="#ffffff">Register now <ArrowRight aria-hidden="true" /></SpecularButton>
+        </div>
       </div>
     </ScrollRevealSection>
+  );
+}
+
+type PlatformCandle = { open: number; close: number; high: number; low: number };
+
+type PlatformDevice = {
+  variant: 'left' | 'center' | 'right';
+  instrument: (typeof tickerItems)[number];
+  candles: PlatformCandle[];
+  sell: string;
+  buy: string;
+};
+
+function PlatformDeviceMock({ instrument, candles, sell, buy }: Pick<PlatformDevice, 'instrument' | 'candles' | 'sell' | 'buy'>) {
+  return (
+    <div className="device-screen">
+      <div className="device-app-bar">
+        <span>Trade</span>
+        <span className="device-balance-pill">0.00 USD</span>
+      </div>
+      <div className="device-tabs">
+        <span>1D</span>
+        <span className="active">1W</span>
+        <span>1M</span>
+        <span>1Y</span>
+      </div>
+      <div className="device-chart">
+        <div className="device-chart-header">
+          <div>
+            <span className="device-chart-symbol">{instrument.symbol}</span>
+            <strong>{instrument.price}</strong>
+          </div>
+          <span className={instrument.direction === 'up' ? 'positive' : 'negative'}>{instrument.change}</span>
+        </div>
+        <svg className="device-chart-plot" viewBox="0 0 140 100" preserveAspectRatio="none" aria-hidden="true">
+          {candles.map(({ open, close, high, low }, index) => {
+            const up = close >= open;
+            const cx = index * 10 + 5;
+            const bodyTop = 100 - Math.max(open, close);
+            const bodyHeight = Math.max(Math.abs(close - open), 2);
+            return (
+              <g key={`candle-${index}`} className={up ? 'candle-up' : 'candle-down'}>
+                <line x1={cx} x2={cx} y1={100 - high} y2={100 - low} />
+                <rect x={cx - 3} y={bodyTop} width={6} height={bodyHeight} />
+              </g>
+            );
+          })}
+        </svg>
+        <div className="device-chart-actions">
+          <button type="button" className="device-chart-sell"><span>Sell</span><strong>{sell}</strong></button>
+          <button type="button" className="device-chart-buy"><span>Buy</span><strong>{buy}</strong></button>
+        </div>
+      </div>
+      <div className="device-tabbar">
+        <span><LayoutGrid aria-hidden="true" /></span>
+        <span className="active"><LineChart aria-hidden="true" /></span>
+        <span><Globe2 aria-hidden="true" /></span>
+        <span><BarChart3 aria-hidden="true" /></span>
+        <span><UserRound aria-hidden="true" /></span>
+      </div>
+    </div>
   );
 }
 
@@ -175,24 +239,74 @@ function PlatformSection() {
     { icon: ShieldCheck, title: 'Control your risk', description: 'Stops, limits, and real-time margin visibility.' },
   ];
 
-  const candles = [
-    { open: 38, close: 46, high: 50, low: 34 },
-    { open: 46, close: 42, high: 49, low: 38 },
-    { open: 42, close: 52, high: 55, low: 40 },
-    { open: 52, close: 48, high: 56, low: 44 },
-    { open: 48, close: 58, high: 60, low: 46 },
-    { open: 58, close: 54, high: 61, low: 50 },
-    { open: 54, close: 62, high: 65, low: 52 },
-    { open: 62, close: 59, high: 66, low: 55 },
-    { open: 59, close: 68, high: 70, low: 57 },
-    { open: 68, close: 64, high: 71, low: 60 },
-    { open: 64, close: 72, high: 75, low: 61 },
-    { open: 72, close: 69, high: 76, low: 65 },
-    { open: 69, close: 78, high: 80, low: 66 },
-    { open: 78, close: 82, high: 85, low: 74 },
+  const devices: PlatformDevice[] = [
+    {
+      variant: 'left',
+      instrument: tickerItems[1],
+      sell: '64,279.8',
+      buy: '64,283.8',
+      candles: [
+        { open: 35, close: 55, high: 60, low: 28 },
+        { open: 55, close: 38, high: 58, low: 32 },
+        { open: 38, close: 62, high: 66, low: 34 },
+        { open: 62, close: 45, high: 65, low: 40 },
+        { open: 45, close: 70, high: 74, low: 42 },
+        { open: 70, close: 50, high: 72, low: 46 },
+        { open: 50, close: 75, high: 78, low: 47 },
+        { open: 75, close: 58, high: 77, low: 54 },
+        { open: 58, close: 40, high: 60, low: 35 },
+        { open: 40, close: 65, high: 68, low: 36 },
+        { open: 65, close: 48, high: 67, low: 44 },
+        { open: 48, close: 72, high: 75, low: 45 },
+        { open: 72, close: 55, high: 74, low: 50 },
+        { open: 55, close: 68, high: 70, low: 48 },
+      ],
+    },
+    {
+      variant: 'center',
+      instrument: tickerItems[0],
+      sell: '5,420.9',
+      buy: '5,421.9',
+      candles: [
+        { open: 38, close: 50, high: 54, low: 34 },
+        { open: 50, close: 42, high: 53, low: 38 },
+        { open: 42, close: 58, high: 61, low: 40 },
+        { open: 58, close: 48, high: 60, low: 44 },
+        { open: 48, close: 64, high: 67, low: 45 },
+        { open: 64, close: 55, high: 66, low: 50 },
+        { open: 55, close: 70, high: 73, low: 52 },
+        { open: 70, close: 60, high: 72, low: 56 },
+        { open: 60, close: 74, high: 76, low: 58 },
+        { open: 74, close: 63, high: 75, low: 60 },
+        { open: 63, close: 48, high: 65, low: 44 },
+        { open: 48, close: 58, high: 60, low: 43 },
+        { open: 58, close: 45, high: 60, low: 40 },
+        { open: 45, close: 52, high: 55, low: 38 },
+      ],
+    },
+    {
+      variant: 'right',
+      instrument: tickerItems[2],
+      sell: '1.0841',
+      buy: '1.0843',
+      candles: [
+        { open: 55, close: 40, high: 58, low: 35 },
+        { open: 40, close: 58, high: 60, low: 36 },
+        { open: 58, close: 45, high: 60, low: 40 },
+        { open: 45, close: 62, high: 64, low: 42 },
+        { open: 62, close: 48, high: 64, low: 44 },
+        { open: 48, close: 65, high: 67, low: 45 },
+        { open: 65, close: 50, high: 66, low: 46 },
+        { open: 50, close: 35, high: 52, low: 30 },
+        { open: 35, close: 55, high: 58, low: 32 },
+        { open: 55, close: 42, high: 57, low: 38 },
+        { open: 42, close: 60, high: 62, low: 39 },
+        { open: 60, close: 46, high: 61, low: 42 },
+        { open: 46, close: 58, high: 59, low: 40 },
+        { open: 58, close: 44, high: 60, low: 38 },
+      ],
+    },
   ];
-
-  const [instrument] = tickerItems;
 
   return (
     <ScrollRevealSection className="section platform-section" id="platform" variant="platform">
@@ -209,59 +323,20 @@ function PlatformSection() {
                 <div className="platform-feature" key={title}><Icon aria-hidden="true" /><p><strong>{title}</strong><span>{description}</span></p></div>
               ))}
             </div>
-            <SpecularButton href="#join" radius={999} {...specularVariants.white}>Explore the platform <ArrowRight aria-hidden="true" /></SpecularButton>
+            <SpecularButton href="#join" radius={999} tint="#d62d47" tintOpacity={0.15} baseColor="#d62d47" lineColor="#ffffff" textColor="#ffffff">Explore the platform <ArrowRight aria-hidden="true" /></SpecularButton>
           </div>
         </div>
-        <div className="platform-visual section-reveal-visual" aria-label="Illustration of the Axquotes app showing a live trading chart with buy and sell actions on a mobile device">
-          <div className="device-frame device-phone">
-            <div className="device-notch" />
-            <div className="device-screen">
-              <div className="device-app-bar">
-                <span>Trade</span>
-                <span className="device-balance-pill">0.00 USD</span>
-              </div>
-              <div className="device-tabs">
-                <span>1D</span>
-                <span className="active">1W</span>
-                <span>1M</span>
-                <span>1Y</span>
-              </div>
-              <div className="device-chart">
-                <div className="device-chart-header">
-                  <div>
-                    <span className="device-chart-symbol">{instrument.symbol}</span>
-                    <strong>{instrument.price}</strong>
-                  </div>
-                  <span className={instrument.direction === 'up' ? 'positive' : 'negative'}>{instrument.change}</span>
-                </div>
-                <svg className="device-chart-plot" viewBox="0 0 140 100" preserveAspectRatio="none" aria-hidden="true">
-                  {candles.map(({ open, close, high, low }, index) => {
-                    const up = close >= open;
-                    const cx = index * 10 + 5;
-                    const bodyTop = 100 - Math.max(open, close);
-                    const bodyHeight = Math.max(Math.abs(close - open), 2);
-                    return (
-                      <g key={`candle-${index}`} className={up ? 'candle-up' : 'candle-down'}>
-                        <line x1={cx} x2={cx} y1={100 - high} y2={100 - low} />
-                        <rect x={cx - 3} y={bodyTop} width={6} height={bodyHeight} />
-                      </g>
-                    );
-                  })}
-                </svg>
-                <div className="device-chart-actions">
-                  <button type="button" className="device-chart-sell"><span>Sell</span><strong>5,420.9</strong></button>
-                  <button type="button" className="device-chart-buy"><span>Buy</span><strong>5,421.9</strong></button>
-                </div>
-              </div>
-              <div className="device-tabbar">
-                <span><LayoutGrid aria-hidden="true" /></span>
-                <span className="active"><LineChart aria-hidden="true" /></span>
-                <span><Globe2 aria-hidden="true" /></span>
-                <span><BarChart3 aria-hidden="true" /></span>
-                <span><UserRound aria-hidden="true" /></span>
+      </div>
+      <div className="platform-visual" aria-label="Illustration of the Axquotes app showing live trading charts for three different markets, each with buy and sell actions">
+        <div className="device-cluster">
+          {devices.map((device) => (
+            <div className={`device-slot device-slot-${device.variant}`} key={device.variant}>
+              <div className={`device-frame device-phone device-phone-${device.variant}`}>
+                <div className="device-notch" />
+                <PlatformDeviceMock instrument={device.instrument} candles={device.candles} sell={device.sell} buy={device.buy} />
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </ScrollRevealSection>
@@ -518,7 +593,7 @@ export function LandingPage() {
               </h2>
               <p className="section-reveal-support mb-8">Open your account, find your market, and take your next step with a platform built to keep the picture clear.</p>
               <div className="join-actions pt-2 section-reveal-panel">
-                <SpecularButton href="/auth" radius={999} {...specularVariants.primary}>Create your account <ArrowRight aria-hidden="true" /></SpecularButton>
+                <SpecularButton href="/auth" radius={999} tint="#d62d47" tintOpacity={0.15} baseColor="#d62d47" lineColor="#ffffff" textColor="#ffffff">Create your account <ArrowRight aria-hidden="true" /></SpecularButton>
               </div>
             </div>
           </div>

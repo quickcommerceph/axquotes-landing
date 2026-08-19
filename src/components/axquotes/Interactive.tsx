@@ -290,7 +290,7 @@ export function SiteHeader() {
             </button>
             <div className="header-auth-links">
               <SpecularButton href="/auth?tab=login" size="sm" radius={999} {...specularVariants.ghost}>Log in</SpecularButton>
-              <SpecularButton href="/auth" size="sm" radius={999} {...specularVariants.primary}>Create account</SpecularButton>
+              <SpecularButton href="/auth" size="sm" radius={999} {...specularVariants.primary}>Start Trading</SpecularButton>
             </div>
             <button
               ref={menuButtonRef}
@@ -350,7 +350,7 @@ export function SiteHeader() {
           </div>
           <div className="mobile-navigation-actions">
             <a className="mobile-login" href="/auth?tab=login" onClick={closeMenu}>Log in <ArrowRight aria-hidden="true" /></a>
-            <SpecularButton href="/auth" onClick={closeMenu} radius={999} {...specularVariants.primary}>Create account</SpecularButton>
+            <SpecularButton href="/auth" onClick={closeMenu} radius={999} {...specularVariants.primary}>Start Trading</SpecularButton>
           </div>
         </nav>
       </div>
@@ -429,7 +429,7 @@ export function MarketExplorer() {
           <span>{active.note}</span>
           <h3>{active.title}</h3>
           <p>{active.description}</p>
-          <a href="#join">Explore {active.label.toLowerCase()} <ArrowRight aria-hidden="true" /></a>
+          <SpecularButton href="#join" size="sm" radius={999} {...specularVariants.primary}>Explore {active.label.toLowerCase()} <ArrowRight aria-hidden="true" /></SpecularButton>
         </div>
         <div className="instrument-list">
           {active.instruments.map((instrument) => (
@@ -478,7 +478,7 @@ export function MobileStickyCta() {
   return (
     <div className="mobile-sticky-cta" data-visible={visible}>
       <div><Check aria-hidden="true" /><span>Ready to make your move?</span></div>
-      <a href="/auth">Start trading</a>
+      <a href="/auth">Start Trading</a>
     </div>
   );
 }
