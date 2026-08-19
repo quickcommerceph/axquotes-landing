@@ -96,7 +96,6 @@ type SignUpFieldValues = {
   phone: string;
   password: string;
   captchaInput: string;
-  referralCode: string;
   agreeNonUs: boolean;
 };
 
@@ -113,7 +112,6 @@ function NewAccountPanel({
     phone: '',
     password: '',
     captchaInput: '',
-    referralCode: '',
     agreeNonUs: false,
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -267,19 +265,6 @@ function NewAccountPanel({
           {captchaError && <p id="signup-captcha-error" role="alert" className="signup-error">That code doesn&rsquo;t match. Try again.</p>}
         </div>
 
-        <div className="signup-field">
-          <label htmlFor="signup-referral">Referral code</label>
-          <input
-            id="signup-referral"
-            name="referralCode"
-            type="text"
-            value={values.referralCode}
-            onChange={(event) => setValues((v) => ({ ...v, referralCode: event.target.value }))}
-            className="signup-input"
-            autoComplete="off"
-          />
-        </div>
-
         <div className="signup-checkbox-field">
           <input
             id="signup-non-us"
@@ -291,7 +276,7 @@ function NewAccountPanel({
           <label htmlFor="signup-non-us">I declare and confirm that I am not a citizen or resident of the US for tax purposes.</label>
         </div>
 
-        <p className="signup-fineprint">
+        <p className="signup-fineprint mb-8">
           By clicking Continue, you have confirmed that you have read, understood and agreed with our{' '}
           <a href="#">Terms and Conditions</a>, <a href="#">Partnership Agreement</a> and <a href="#">Privacy Policy</a>.
         </p>
