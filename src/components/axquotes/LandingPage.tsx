@@ -336,6 +336,7 @@ function PlatformSection() {
               </div>
             </div>
           ))}
+          <div className="device-glow" aria-hidden="true" />
           <SpecularButton href="#join" radius={999} tint="#d62d47" tintOpacity={1} baseColor="#d62d47" lineColor="#ffffff" textColor="#ffffff" className="platform-cta">Explore the platform <ArrowRight aria-hidden="true" /></SpecularButton>
         </div>
       </div>
