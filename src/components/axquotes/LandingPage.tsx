@@ -323,7 +323,6 @@ function PlatformSection() {
                 <div className="platform-feature" key={title}><Icon aria-hidden="true" /><p><strong>{title}</strong><span>{description}</span></p></div>
               ))}
             </div>
-            <SpecularButton href="#join" radius={999} tint="#d62d47" tintOpacity={0.15} baseColor="#d62d47" lineColor="#ffffff" textColor="#ffffff">Explore the platform <ArrowRight aria-hidden="true" /></SpecularButton>
           </div>
         </div>
       </div>
@@ -337,6 +336,7 @@ function PlatformSection() {
               </div>
             </div>
           ))}
+          <SpecularButton href="#join" radius={999} tint="#d62d47" tintOpacity={1} baseColor="#d62d47" lineColor="#ffffff" textColor="#ffffff" className="platform-cta">Explore the platform <ArrowRight aria-hidden="true" /></SpecularButton>
         </div>
       </div>
     </ScrollRevealSection>
