@@ -189,6 +189,10 @@ const SpecularButton = ({
     const btn = btnRef.current;
     const fx = fxRef.current;
     if (!btn || !fx) return;
+    // The shine follows the pointer, so it never shows on touch input. Skip
+    // the WebGL context and render loop entirely on no-hover devices instead
+    // of running it forever for an effect nobody will see.
+    if (!window.matchMedia('(hover: hover)').matches) return;
 
     const dpr = window.devicePixelRatio || 1;
     const renderer = new Renderer({ alpha: true, premultipliedAlpha: true, antialias: true, dpr });
@@ -277,6 +281,12 @@ const SpecularButton = ({
       raf = requestAnimationFrame(update);
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
+
+      // IntersectionObserver only tracks geometry, so a fixed, off-canvas
+      // panel like the closed mobile nav still reads as "intersecting" even
+      // while hidden via opacity/visibility. Skip the render in that case.
+      if (btn.checkVisibility?.({ opacityProperty: true, visibilityProperty: true }) === false) return;
+
       const p = propsRef.current;
 
       idleAngle += p.speed * dt;

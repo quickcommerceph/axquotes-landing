@@ -1,83 +1,26 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { ArrowRight, Check, ChevronDown, Globe2, Menu, ShieldAlert, X } from 'lucide-react';
+import { ArrowRight, Check, ChevronDown, MapPin, Menu, X } from 'lucide-react';
 import { useInView, useReducedMotion } from 'motion/react';
 import { marketCategories, tickerItems } from './data';
+import { localeOptions, siteNavigation as navigation } from './navigation';
 import SpecularButton, { specularVariants } from './SpecularButton';
-
-type NavLink = { label: string; href: string };
-type NavItem = { label: string; href: string; dropdown: { heading: string; links: NavLink[] } };
-
-const navigation: NavItem[] = [
-  {
-    label: 'Markets',
-    href: '#markets',
-    dropdown: {
-      heading: 'Invest',
-      links: [
-        { label: 'Forex', href: '#' },
-        { label: 'Indices', href: '#' },
-        { label: 'Shares', href: '#' },
-        { label: 'Commodities', href: '#' },
-        { label: 'Cryptocurrencies', href: '#' },
-      ],
-    },
-  },
-  {
-    label: 'Benefits',
-    href: '#benefits',
-    dropdown: {
-      heading: 'Benefits',
-      links: [
-        { label: 'Cashback', href: '#' },
-        { label: 'Referral rewards', href: '#' },
-        { label: 'Volume rebates', href: '#' },
-      ],
-    },
-  },
-  {
-    label: 'Platform',
-    href: '#platform',
-    dropdown: {
-      heading: 'Platform',
-      links: [
-        { label: 'Web trading', href: '#' },
-        { label: 'Mobile app', href: '#' },
-        { label: 'Pricing', href: '#' },
-        { label: 'Trading hours', href: '#' },
-      ],
-    },
-  },
-  {
-    label: 'Learn',
-    href: '#learn',
-    dropdown: {
-      heading: 'Learn',
-      links: [
-        { label: 'Trading academy', href: '#' },
-        { label: 'Market analysis', href: '#' },
-        { label: 'News and insights', href: '#' },
-        { label: 'Glossary', href: '#' },
-      ],
-    },
-  },
-];
 
 export function AnimatedStat({ value }: { value: string }) {
   const numberRef = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(numberRef, { amount: 0.7, once: true });
+  const isInView = useInView(numberRef, { amount: 0.2, once: true });
   const prefersReducedMotion = useReducedMotion();
   const match = /^(\d+)(.*)$/.exec(value);
   const target = Number(match?.[1] ?? 0);
   const suffix = match?.[2] ?? '';
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const element = numberRef.current;
     if (!element || !isInView || prefersReducedMotion) return;
 
-    const duration = 900;
+    const duration = 1600;
     const startedAt = performance.now();
     let frame = 0;
 
@@ -107,11 +50,14 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [activeHref, setActiveHref] = useState<string | null>(null);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [localeCode, setLocaleCode] = useState(localeOptions[0].code);
+  const activeLocale = localeOptions.find((option) => option.code === localeCode) ?? localeOptions[0];
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
   const mobileNavigationRef = useRef<HTMLDivElement>(null);
   const desktopNavigationRef = useRef<HTMLElement>(null);
   const dropdownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const localeItemRef = useRef<HTMLDivElement>(null);
 
   const clearDropdownTimer = () => {
     if (dropdownTimerRef.current) {
@@ -131,7 +77,8 @@ export function SiteHeader() {
     if (!openDropdown) return;
 
     const handleOutsideClick = (event: MouseEvent) => {
-      if (!desktopNavigationRef.current?.contains(event.target as Node)) {
+      const target = event.target as Node;
+      if (!desktopNavigationRef.current?.contains(target) && !localeItemRef.current?.contains(target)) {
         clearDropdownTimer();
         setOpenDropdown(null);
       }
@@ -208,6 +155,7 @@ export function SiteHeader() {
 
   useEffect(() => {
     const sections = navigation
+      .filter(({ href }) => href.startsWith('#'))
       .map(({ href }) => document.querySelector<HTMLElement>(href))
       .filter((section): section is HTMLElement => Boolean(section));
 
@@ -234,7 +182,6 @@ export function SiteHeader() {
     <div className="site-chrome">
       <div className="risk-bar" role="note" aria-label="Risk warning">
         <div className="risk-bar-inner">
-          <ShieldAlert aria-hidden="true" />
           <p>CFDs are leveraged, complex instruments. Losses can occur rapidly, and you may lose your invested capital.</p>
         </div>
       </div>
@@ -273,10 +220,21 @@ export function SiteHeader() {
                     {item.label}
                     <ChevronDown aria-hidden="true" />
                   </button>
-                  <div id={dropdownId} className="nav-dropdown" role="menu" aria-label={`${item.label} menu`} data-open={isOpen}>
-                    <span className="nav-dropdown-heading">{item.dropdown.heading}</span>
-                    {item.dropdown.links.map((link) => (
-                      <a key={link.label} href={link.href} role="menuitem">{link.label}</a>
+                  <div
+                    id={dropdownId}
+                    className="nav-dropdown"
+                    role="menu"
+                    aria-label={`${item.label} menu`}
+                    data-open={isOpen}
+                    data-groups={item.groups.length > 1 ? 'multi' : undefined}
+                  >
+                    {item.groups.map((group) => (
+                      <div className="nav-dropdown-group" key={group.heading}>
+                        {item.groups.length > 1 && <span className="nav-dropdown-heading">{group.heading}</span>}
+                        {group.links.map((link) => (
+                          <a key={link.label} href={link.href} role="menuitem">{link.label}</a>
+                        ))}
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -284,10 +242,62 @@ export function SiteHeader() {
             })}
           </nav>
           <div className="header-actions">
-            <button type="button" className="lang-toggle" aria-label="Change language">
-              <Globe2 aria-hidden="true" />
-              <span>EN</span>
-            </button>
+            <div
+              className="nav-item locale-nav-item"
+              ref={localeItemRef}
+              onMouseEnter={() => {
+                if (window.matchMedia('(hover: hover)').matches) scheduleDropdown('Locale', 150);
+              }}
+              onMouseLeave={() => {
+                if (window.matchMedia('(hover: hover)').matches) scheduleDropdown(null, 180);
+              }}
+            >
+              <button
+                type="button"
+                className="nav-item-trigger"
+                aria-expanded={openDropdown === 'Locale'}
+                aria-haspopup="true"
+                aria-controls="nav-dropdown-locale"
+                onClick={() => {
+                  clearDropdownTimer();
+                  setOpenDropdown((current) => (current === 'Locale' ? null : 'Locale'));
+                }}
+              >
+                <span aria-hidden="true">{activeLocale.flag}</span>
+                {activeLocale.code}
+                <ChevronDown aria-hidden="true" />
+              </button>
+              <div
+                id="nav-dropdown-locale"
+                className="nav-dropdown"
+                role="menu"
+                aria-label="Select region and language"
+                data-open={openDropdown === 'Locale'}
+              >
+                <div className="nav-dropdown-group">
+                  {localeOptions.map((option) => (
+                    <button
+                      key={option.code}
+                      type="button"
+                      role="menuitemradio"
+                      aria-checked={option.code === localeCode}
+                      className="region-option"
+                      onClick={() => {
+                        setLocaleCode(option.code);
+                        clearDropdownTimer();
+                        setOpenDropdown(null);
+                      }}
+                    >
+                      <span className="region-option-label">
+                        <span aria-hidden="true">{option.flag}</span>
+                        {option.country}
+                      </span>
+                      {option.code === localeCode && <Check aria-hidden="true" />}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
             <div className="header-auth-links">
               <SpecularButton href="/auth?tab=login" size="sm" radius={999} {...specularVariants.ghost}>Log in</SpecularButton>
               <SpecularButton href="/auth" size="sm" radius={999} {...specularVariants.primary}>Start Trading</SpecularButton>
@@ -341,12 +351,34 @@ export function SiteHeader() {
                   <ChevronDown aria-hidden="true" />
                 </summary>
                 <div>
-                  {item.dropdown.links.map((link) => (
-                    <a key={link.label} href={link.href} onClick={closeMenu}>{link.label}</a>
+                  {item.groups.map((group) => (
+                    <div className="mobile-nav-group" key={group.heading}>
+                      {item.groups.length > 1 && <span className="mobile-nav-group-heading">{group.heading}</span>}
+                      {group.links.map((link) => (
+                        <a key={link.label} href={link.href} onClick={closeMenu}>{link.label}</a>
+                      ))}
+                    </div>
                   ))}
                 </div>
               </details>
             ))}
+          </div>
+          <div className="mobile-locale-picker">
+            <span className="mobile-locale-label"><MapPin aria-hidden="true" />Region &amp; language</span>
+            <div className="mobile-locale-options">
+              {localeOptions.map((option) => (
+                <button
+                  key={option.code}
+                  type="button"
+                  data-active={option.code === localeCode}
+                  onClick={() => setLocaleCode(option.code)}
+                >
+                  <span aria-hidden="true">{option.flag}</span>
+                  {option.country}
+                  <span className="mobile-locale-code">{option.code}</span>
+                </button>
+              ))}
+            </div>
           </div>
           <div className="mobile-navigation-actions">
             <a className="mobile-login" href="/auth?tab=login" onClick={closeMenu}>Log in <ArrowRight aria-hidden="true" /></a>

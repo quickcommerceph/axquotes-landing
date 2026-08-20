@@ -35,6 +35,7 @@ import {
   SiteHeader,
 } from './Interactive';
 import { Hero } from './Hero';
+import { footerGroups } from './navigation';
 import { ScrollRevealSection } from './ScrollRevealSection';
 import SpecularButton from './SpecularButton';
 import { tickerItems } from './data';
@@ -48,8 +49,8 @@ function TrustStrip() {
   ];
 
   return (
-    <ScrollRevealSection className="trust-strip" id="stats" variant="stats">
-      <div className="site-shell trust-grid section-reveal-panel" aria-label="Axquotes at a glance">
+    <section className="trust-strip" id="stats">
+      <div className="site-shell trust-grid" aria-label="Axquotes at a glance">
         {items.map(({ value, label, icon: Icon }) => (
           <div className="trust-item" key={label}>
             <Icon aria-hidden="true" />
@@ -57,7 +58,7 @@ function TrustStrip() {
           </div>
         ))}
       </div>
-    </ScrollRevealSection>
+    </section>
   );
 }
 
@@ -147,11 +148,10 @@ function BenefitsSection() {
         </div>
         <div className="benefits-stage section-reveal-panel">
           <div className="benefits-grid">
-            {benefits.map(({ icon: Icon, value, title, description, cta, tone, image }) => (
+            {benefits.map(({ value, title, description, cta, tone, image }) => (
               <article className={`benefit-panel benefit-${tone}`} key={value}>
                 <div className={`benefit-visual${image ? ' benefit-photo' : ''}`} data-mark={value}>
                   {image && <Image src={image.src} alt={image.alt} fill sizes={image.sizes} />}
-                  <span><Icon aria-hidden="true" /></span>
                 </div>
                 <div className="benefit-copy">
                   <span>{value}</span>
@@ -344,6 +344,97 @@ function PlatformSection() {
   );
 }
 
+type AccountDevice = {
+  variant: 'left' | 'center' | 'right';
+  plan: 'Standard' | 'Pro' | 'VIP';
+  balance: string;
+  change: string;
+  equity: string;
+  margin: string;
+  free: string;
+};
+
+const accountPlans: AccountDevice['plan'][] = ['Standard', 'Pro', 'VIP'];
+
+function AccountDeviceMock({ plan, balance, change, equity, margin, free }: Omit<AccountDevice, 'variant'>) {
+  return (
+    <div className="device-screen">
+      <div className="device-app-bar">
+        <span>Account</span>
+        <WalletCards aria-hidden="true" className="device-app-icon" />
+      </div>
+      <div className="device-tabs">
+        {accountPlans.map((tab) => (
+          <span key={tab} className={tab === plan ? 'active' : undefined}>{tab}</span>
+        ))}
+      </div>
+      <div className="device-account">
+        <div className="device-chart-header device-account-header">
+          <div>
+            <span className="device-chart-symbol">Account balance</span>
+            <strong>{balance}</strong>
+          </div>
+          <span className="positive">{change}</span>
+        </div>
+        <div className="device-account-metrics">
+          <div><span>Equity</span><strong>{equity}</strong></div>
+          <div><span>Margin</span><strong className="positive">{margin}</strong></div>
+          <div><span>Free</span><strong>{free}</strong></div>
+        </div>
+        <div className="device-account-actions">
+          <div><span><SlidersHorizontal aria-hidden="true" /></span><small>Trade</small></div>
+          <div><span className="coral"><ArrowDownToLine aria-hidden="true" /></span><small>Deposit</small></div>
+          <div><span><ArrowUpRight aria-hidden="true" /></span><small>Withdraw</small></div>
+          <div><span><ArrowLeftRight aria-hidden="true" /></span><small>Transfer</small></div>
+        </div>
+      </div>
+      <div className="device-tabbar">
+        <span><LayoutGrid aria-hidden="true" /></span>
+        <span><LineChart aria-hidden="true" /></span>
+        <span><Globe2 aria-hidden="true" /></span>
+        <span><BarChart3 aria-hidden="true" /></span>
+        <span className="active"><UserRound aria-hidden="true" /></span>
+      </div>
+    </div>
+  );
+}
+
+function JoinSection() {
+  const accountDevices: AccountDevice[] = [
+    { variant: 'left', plan: 'Pro', balance: '$58,240.00', change: '+1.8%', equity: '$58,912', margin: '512%', free: '$57,120' },
+    { variant: 'center', plan: 'Standard', balance: '$24,500.00', change: '+2.4%', equity: '$24,712', margin: '482%', free: '$23,940' },
+    { variant: 'right', plan: 'VIP', balance: '$146,380.00', change: '+3.1%', equity: '$147,225', margin: '624%', free: '$144,860' },
+  ];
+
+  return (
+    <ScrollRevealSection className="section join-section" id="join" variant="join">
+      <div className="site-shell join-layout">
+        <div className="join-copy">
+          <h2>
+            <span className="section-reveal-line"><span className="section-reveal-line-inner"><span className="section-heading-accent">Ready</span> when</span></span>
+            <span className="section-reveal-line"><span className="section-reveal-line-inner">you are.</span></span>
+          </h2>
+          <p className="section-reveal-support">Open your account, find your market, and take your next step with a platform built to keep the picture clear.</p>
+        </div>
+      </div>
+      <div className="join-visual" aria-label="Illustration of the Axquotes app showing Standard, Pro, and VIP account balances and quick actions across three mobile devices">
+        <div className="device-cluster">
+          {accountDevices.map((device) => (
+            <div className={`device-slot device-slot-${device.variant}`} key={device.variant}>
+              <div className={`device-frame device-phone device-phone-${device.variant}`}>
+                <div className="device-notch" />
+                <AccountDeviceMock plan={device.plan} balance={device.balance} change={device.change} equity={device.equity} margin={device.margin} free={device.free} />
+              </div>
+            </div>
+          ))}
+          <div className="device-glow" aria-hidden="true" />
+          <SpecularButton href="/auth" radius={999} tint="#d62d47" tintOpacity={1} baseColor="#d62d47" lineColor="#ffffff" textColor="#ffffff" className="join-cta">Yes, I&apos;m Ready! <ArrowRight aria-hidden="true" /></SpecularButton>
+        </div>
+      </div>
+    </ScrollRevealSection>
+  );
+}
+
 function TrustSection() {
   const trustCards = [
     {
@@ -448,14 +539,7 @@ function PlayGlyph() {
 }
 
 export function SiteFooter() {
-  const groups = [
-    { title: 'Invest', links: ['Forex', 'Indices', 'Shares', 'Commodities', 'Cryptocurrencies'] },
-    { title: 'Platform', links: ['Web trading', 'Mobile app', 'Pricing', 'Trading hours'] },
-    { title: 'Learn', links: ['Trading academy', 'Market analysis', 'News and insights', 'Glossary'] },
-    { title: 'Company', links: ['About Axquotes', 'Careers', 'Contact'] },
-    { title: 'Legal', links: ['Regulation', 'Privacy Policy', 'Terms & Conditions', 'Cookie Policy'] },
-    { title: 'Partners', links: ['Affiliate Program', 'Invite a Friend', 'Partner Network'] },
-  ];
+  const groups = footerGroups;
 
   return (
     <footer className="site-footer" id="company">
@@ -484,16 +568,16 @@ export function SiteFooter() {
           </div>
           <div className="footer-link-grid desktop-footer-group">
             {groups.map((group) => (
-              <div className="footer-group" key={group.title}>
-                <h3>{group.title}</h3>
-                {group.links.map((link) => <a href="#" key={link}>{link}</a>)}
+              <div className="footer-group" key={group.heading}>
+                <h3>{group.heading}</h3>
+                {group.links.map((link) => <a href={link.href} key={link.label}>{link.label}</a>)}
               </div>
             ))}
           </div>
           <div className="mobile-footer-groups">
             {groups.map((group) => (
-              <FooterDisclosure title={group.title} key={group.title}>
-                {group.links.map((link) => <a href="#" key={link}>{link}</a>)}
+              <FooterDisclosure title={group.heading} key={group.heading}>
+                {group.links.map((link) => <a href={link.href} key={link.label}>{link.label}</a>)}
               </FooterDisclosure>
             ))}
           </div>
@@ -542,63 +626,7 @@ export function LandingPage() {
 
         <LearnSection />
 
-        <ScrollRevealSection className="join-section" id="join" variant="join">
-          <div className="site-shell join-panel">
-            <div className="join-visual section-reveal-panel" aria-label="Illustration of the Axquotes app showing a standard account balance and quick actions on a mobile device">
-              <div className="device-frame device-phone">
-                <div className="device-notch" />
-                <div className="device-screen">
-                  <div className="device-app-bar">
-                    <span>Account</span>
-                    <WalletCards aria-hidden="true" className="device-app-icon" />
-                  </div>
-                  <div className="device-tabs">
-                    <span className="active">Standard</span>
-                    <span>Pro</span>
-                    <span>VIP</span>
-                  </div>
-                  <div className="device-account">
-                    <div className="device-chart-header device-account-header">
-                      <div>
-                        <span className="device-chart-symbol">Account balance</span>
-                        <strong>$24,500.00</strong>
-                      </div>
-                      <span className="positive">+2.4%</span>
-                    </div>
-                    <div className="device-account-metrics">
-                      <div><span>Equity</span><strong>$24,712</strong></div>
-                      <div><span>Margin</span><strong className="positive">482%</strong></div>
-                      <div><span>Free</span><strong>$23,940</strong></div>
-                    </div>
-                    <div className="device-account-actions">
-                      <div><span><SlidersHorizontal aria-hidden="true" /></span><small>Trade</small></div>
-                      <div><span className="coral"><ArrowDownToLine aria-hidden="true" /></span><small>Deposit</small></div>
-                      <div><span><ArrowUpRight aria-hidden="true" /></span><small>Withdraw</small></div>
-                      <div><span><ArrowLeftRight aria-hidden="true" /></span><small>Transfer</small></div>
-                    </div>
-                  </div>
-                  <div className="device-tabbar">
-                    <span><LayoutGrid aria-hidden="true" /></span>
-                    <span><LineChart aria-hidden="true" /></span>
-                    <span><Globe2 aria-hidden="true" /></span>
-                    <span><BarChart3 aria-hidden="true" /></span>
-                    <span className="active"><UserRound aria-hidden="true" /></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="join-copy">
-              <h2>
-                <span className="section-reveal-line"><span className="section-reveal-line-inner">Ready when</span></span>
-                <span className="section-reveal-line"><span className="section-reveal-line-inner section-heading-accent">you are.</span></span>
-              </h2>
-              <p className="section-reveal-support mb-8">Open your account, find your market, and take your next step with a platform built to keep the picture clear.</p>
-              <div className="join-actions pt-2 section-reveal-panel">
-                <SpecularButton href="/auth" radius={999} tint="#d62d47" tintOpacity={0.15} baseColor="#d62d47" lineColor="#ffffff" textColor="#ffffff">Create your account <ArrowRight aria-hidden="true" /></SpecularButton>
-              </div>
-            </div>
-          </div>
-        </ScrollRevealSection>
+        <JoinSection />
       </main>
       <SiteFooter />
       <MobileStickyCta />

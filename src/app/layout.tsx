@@ -22,7 +22,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" data-scroll-behavior="smooth">
       <body suppressHydrationWarning>
         {/*
           THESIS: Axquotes turns market complexity into forward motion; it refuses the generic broker page made of interchangeable feature cards.

@@ -47,24 +47,30 @@ export function Hero() {
       return;
     }
 
-    const controls = animate([
-      [
-        '.hero-line-inner',
-        {
-          clipPath: ['inset(0 0 100% 0)', 'inset(0 0 0% 0)'],
-          opacity: [0, 1],
-          y: ['24%', '0%'],
-        },
-        { duration: 0.68, delay: stagger(0.09), ease: easeOut },
-      ],
-      [
-        '.hero-support',
-        { opacity: [0, 1], y: [16, 0] },
-        { at: '-0.28', duration: 0.45, delay: stagger(0.07), ease: easeOut },
-      ],
-    ]);
+    let controls: ReturnType<typeof animate> | undefined;
+    const timeout = setTimeout(() => {
+      controls = animate([
+        [
+          '.hero-line-inner',
+          {
+            clipPath: ['inset(0 0 100% 0)', 'inset(0 0 0% 0)'],
+            opacity: [0, 1],
+            y: ['24%', '0%'],
+          },
+          { duration: 0.68, delay: stagger(0.09), ease: easeOut },
+        ],
+        [
+          '.hero-support',
+          { opacity: [0, 1], y: [16, 0] },
+          { at: '-0.28', duration: 0.45, delay: stagger(0.07), ease: easeOut },
+        ],
+      ]);
+    }, 300);
 
-    return () => controls.stop();
+    return () => {
+      clearTimeout(timeout);
+      controls?.stop();
+    };
   }, [animate, prefersReducedMotion]);
 
   return (

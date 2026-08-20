@@ -5,7 +5,7 @@ import { type AnimationSequence, stagger, useAnimate, useInView, useReducedMotio
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
-type RevealVariant = 'markets' | 'benefits' | 'fees' | 'stats' | 'platform' | 'trust' | 'learn' | 'join';
+type RevealVariant = 'markets' | 'benefits' | 'fees' | 'platform' | 'trust' | 'learn' | 'join';
 
 type ScrollRevealSectionProps = {
   id: string;
@@ -27,10 +27,6 @@ const variantConfig: Record<RevealVariant, { panelSelector: string; itemSelector
     itemSelector: '.fee-card',
     noteSelector: '.fees-note',
   },
-  stats: {
-    panelSelector: '.section-reveal-panel',
-    itemSelector: '.trust-item',
-  },
   platform: {
     panelSelector: '.section-reveal-panel',
     itemSelector: '.platform-feature',
@@ -49,6 +45,9 @@ const variantConfig: Record<RevealVariant, { panelSelector: string; itemSelector
   },
   join: {
     panelSelector: '.section-reveal-panel',
+    deviceSelector: '.device-slot',
+    glowSelector: '.device-glow',
+    ctaSelector: '.join-cta',
   },
 };
 
