@@ -82,14 +82,15 @@ export const siteNavigation: NavSection[] = [
 
 export const footerGroups = siteNavigation.flatMap((section) => section.groups);
 
-export type LocaleOption = { country: string; code: string; flag: string };
+export type LocaleOption = { language: string; code: string; flag: string };
 
 export const localeOptions: LocaleOption[] = [
-  { country: 'Malaysia', code: 'EN', flag: '🇲🇾' },
-  { country: 'Indonesia', code: 'ID', flag: '🇮🇩' },
-  { country: 'Thailand', code: 'TH', flag: '🇹🇭' },
-  { country: 'Vietnam', code: 'VI', flag: '🇻🇳' },
-  { country: 'China', code: 'CN', flag: '🇨🇳' },
+  { language: 'English', code: 'EN', flag: '🇺🇸' },
+  { language: 'Bahasa Melayu', code: 'MY', flag: '🇲🇾' },
+  { language: 'Bahasa Indonesia', code: 'ID', flag: '🇮🇩' },
+  { language: 'ไทย', code: 'TH', flag: '🇹🇭' },
+  { language: 'Tiếng Việt', code: 'VI', flag: '🇻🇳' },
+  { language: '中文', code: 'CN', flag: '🇨🇳' },
 ];
 
 export type Breadcrumb = { label: string; href: string };

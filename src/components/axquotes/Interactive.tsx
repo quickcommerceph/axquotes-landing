@@ -290,7 +290,7 @@ export function SiteHeader() {
                     >
                       <span className="region-option-label">
                         <span aria-hidden="true">{option.flag}</span>
-                        {option.country}
+                        {option.language}
                       </span>
                       {option.code === localeCode && <Check aria-hidden="true" />}
                     </button>
@@ -374,7 +374,7 @@ export function SiteHeader() {
                   onClick={() => setLocaleCode(option.code)}
                 >
                   <span aria-hidden="true">{option.flag}</span>
-                  {option.country}
+                  {option.language}
                   <span className="mobile-locale-code">{option.code}</span>
                 </button>
               ))}
