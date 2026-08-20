@@ -1,5 +1,7 @@
 # Migrate custom CSS to Tailwind CSS v4
 
+**Status: executed** as of commit `e599b36` ("mobile fixes and clean up") on `main`. `globals.css` is now ~190 lines and all components listed below are Tailwind-utility-first. This doc is kept as a historical record of the migration rationale — notably the Motion class-selector coupling — not as a live plan. Current conventions live in `.claude/CLAUDE.md` and `.claude/rules/`.
+
 ## Context
 
 The app currently has Tailwind v4 installed and wired up (`@import 'tailwindcss'` + a small `@theme` block in `src/app/globals.css`), but no component actually uses Tailwind utility classes. Every visual style in the app — layout, typography, color, spacing, responsive behavior, hover/focus states, pseudo-elements — is authored as ~622 lines of hand-written custom CSS in `globals.css`, referenced from components via BEM-ish class names (`.hero`, `.market-panel`, `.signup-input`, `.benefit-panel`, etc.). The goal is to migrate all of that styling to Tailwind utility classes directly in the components, so `globals.css` shrinks down to Tailwind's import, design tokens, and only the small number of things Tailwind categorically cannot express.

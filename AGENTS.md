@@ -11,3 +11,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 # Dev server
 
 Do not run `next dev` / `npm run dev` (or start any dev server) as part of a task. The user runs and tests the app manually after each task.
+
+# Code conventions
+
+See `.claude/CLAUDE.md` for the tech stack and critical rules, and `.claude/rules/` for detailed topic guides (TypeScript, components, styling, animation, lint/build).
