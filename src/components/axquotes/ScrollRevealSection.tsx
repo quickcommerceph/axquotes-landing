@@ -1,6 +1,6 @@
 'use client';
 
-import { type ReactNode, useEffect } from 'react';
+import { type ReactNode, useEffect, useLayoutEffect, useRef } from 'react';
 import { type AnimationSequence, stagger, useAnimate, useInView, useReducedMotion } from 'motion/react';
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
@@ -69,10 +69,24 @@ export function ScrollRevealSection({
   const prefersReducedMotion = useReducedMotion();
   const config = variantConfig[variant];
 
-  useEffect(() => {
-    if (!isInView && !prefersReducedMotion) return;
+  // Scroll restoration can land the page mid-scroll on refresh. A section already
+  // scrolled past at that point would otherwise stay hidden until the user scrolls
+  // back up to it, playing its "enter" animation backwards. Catch that case on mount
+  // and reveal it instantly instead.
+  const alreadyPassedOnMountRef = useRef(false);
 
-    if (prefersReducedMotion) {
+  useLayoutEffect(() => {
+    if (scope.current && scope.current.getBoundingClientRect().bottom <= 0) {
+      alreadyPassedOnMountRef.current = true;
+    }
+  }, [scope]);
+
+  useEffect(() => {
+    const skipToFinalState = alreadyPassedOnMountRef.current || prefersReducedMotion;
+
+    if (!isInView && !skipToFinalState) return;
+
+    if (skipToFinalState) {
       animate(
         instantRevealSelector,
         { clipPath: 'inset(0 0 0% 0)', opacity: 1, y: 0 },

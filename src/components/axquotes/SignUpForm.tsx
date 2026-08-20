@@ -62,8 +62,8 @@ export function SignUpForm({ initialTab }: SignUpFormProps) {
   };
 
   return (
-    <div className="signup-card">
-      <div className="signup-tabs" role="tablist" aria-label="Account access">
+    <div className="rounded-2xl bg-ink-soft p-[clamp(1.75rem,4vw,2.75rem)] shadow-[1rem_2.4rem_5rem_rgba(0,0,0,0.34)] max-mobile:p-6 max-mobile:rounded-[0.8rem]">
+      <div className="flex mb-[clamp(1.5rem,3vw,2rem)] border-b border-white/10" role="tablist" aria-label="Account access">
         {tabs.map((tab, index) => (
           <button
             key={tab.id}
@@ -76,6 +76,7 @@ export function SignUpForm({ initialTab }: SignUpFormProps) {
             tabIndex={activeTab === tab.id ? 0 : -1}
             onClick={() => switchTab(tab.id)}
             onKeyDown={(event) => handleTabKeyDown(event, index)}
+            className="relative flex-1 border-0 bg-transparent pb-[0.9rem] text-[0.75rem] font-extrabold uppercase tracking-[0.06em] cursor-pointer [transition:color_180ms_ease] text-[#969aa5] aria-selected:text-white after:content-[''] after:absolute after:left-0 after:right-0 after:-bottom-px after:h-0.5 after:bg-coral after:scale-x-0 after:[transition:transform_220ms_var(--ease-out)] aria-selected:after:scale-x-100"
           >
             {tab.label}
           </button>
@@ -155,31 +156,31 @@ function NewAccountPanel({
   };
 
   return (
-    <div className="signup-panel" role="tabpanel" id="signup-panel-signup" aria-labelledby="signup-tab-signup">
+    <div className="animate-[market-panel-enter_420ms_var(--ease-out)_both]" role="tabpanel" id="signup-panel-signup" aria-labelledby="signup-tab-signup">
       <form onSubmit={handleSubmit} noValidate={false}>
-        <p className="signup-section-label">Create profile</p>
+        <p className="mt-8 mb-4 text-[#8dd9f5] text-[0.65rem] font-extrabold uppercase tracking-[0.08em] first:mt-0">Create profile</p>
 
-        <div className="signup-field">
-          <label htmlFor="signup-location">Location <span className="signup-required" aria-hidden="true">*</span></label>
-          <div className="signup-select-wrap">
+        <div className="flex flex-col gap-2 mb-[1.1rem]">
+          <label htmlFor="signup-location" className="text-[#d8dae0] text-[0.78rem] font-extrabold tracking-[0.08em] uppercase">Location <span className="text-coral" aria-hidden="true">*</span></label>
+          <div className="relative">
             <select
               id="signup-location"
               ref={firstFieldRef}
               required
               value={values.countryCode}
               onChange={(event) => setValues((v) => ({ ...v, countryCode: event.target.value }))}
-              className="signup-select"
+              className="w-full min-h-[3.1rem] appearance-none rounded-lg border border-white/14 bg-white/4 text-white pl-4 pr-10 text-[0.88rem] transition-[border-color,background-color] duration-[180ms] hover:border-white/24 [&>option]:bg-ink-soft [&>option]:text-white"
             >
               {countries.map((country) => (
                 <option key={country.code} value={country.code}>{country.name}</option>
               ))}
             </select>
-            <ChevronDown aria-hidden="true" />
+            <ChevronDown aria-hidden="true" className="absolute top-1/2 right-4 w-4 text-[#9296a0] -translate-y-1/2 pointer-events-none" />
           </div>
         </div>
 
-        <div className="signup-field">
-          <label htmlFor="signup-email">Email <span className="signup-required" aria-hidden="true">*</span></label>
+        <div className="flex flex-col gap-2 mb-[1.1rem]">
+          <label htmlFor="signup-email" className="text-[#d8dae0] text-[0.78rem] font-extrabold tracking-[0.08em] uppercase">Email <span className="text-coral" aria-hidden="true">*</span></label>
           <input
             id="signup-email"
             name="email"
@@ -187,15 +188,15 @@ function NewAccountPanel({
             required
             value={values.email}
             onChange={(event) => setValues((v) => ({ ...v, email: event.target.value }))}
-            className="signup-input"
+            className="w-full min-h-[3.1rem] rounded-lg border border-white/14 bg-white/4 text-white pl-4 pr-4 text-[0.88rem] transition-[border-color,background-color] duration-[180ms] placeholder:text-[#6f7280] hover:border-white/24"
             autoComplete="email"
           />
         </div>
 
-        <div className="signup-field">
-          <label htmlFor="signup-phone">Mobile <span className="signup-required" aria-hidden="true">*</span></label>
-          <div className="signup-phone-field">
-            <span className="signup-phone-prefix">{selectedCountry.dialCode}</span>
+        <div className="flex flex-col gap-2 mb-[1.1rem]">
+          <label htmlFor="signup-phone" className="text-[#d8dae0] text-[0.78rem] font-extrabold tracking-[0.08em] uppercase">Mobile <span className="text-coral" aria-hidden="true">*</span></label>
+          <div className="flex">
+            <span className="min-h-[3.1rem] flex items-center px-[0.85rem] border border-white/14 border-r-0 rounded-l-lg bg-white/8 text-[#d8dae0] font-extrabold text-[0.85rem] whitespace-nowrap">{selectedCountry.dialCode}</span>
             <input
               id="signup-phone"
               name="phone"
@@ -203,17 +204,17 @@ function NewAccountPanel({
               required
               value={values.phone}
               onChange={(event) => setValues((v) => ({ ...v, phone: event.target.value }))}
-              className="signup-input"
+              className="w-full min-h-[3.1rem] rounded-r-lg border border-white/14 bg-white/4 text-white pl-4 pr-4 text-[0.88rem] transition-[border-color,background-color] duration-[180ms] placeholder:text-[#6f7280] hover:border-white/24"
               autoComplete="tel-national"
             />
           </div>
         </div>
 
-        <p className="signup-section-label">Create password</p>
+        <p className="mt-8 mb-4 text-[#8dd9f5] text-[0.65rem] font-extrabold uppercase tracking-[0.08em] first:mt-0">Create password</p>
 
-        <div className="signup-field">
-          <label htmlFor="signup-password">Choose password <span className="signup-required" aria-hidden="true">*</span></label>
-          <div className="signup-password-field">
+        <div className="flex flex-col gap-2 mb-[1.1rem]">
+          <label htmlFor="signup-password" className="text-[#d8dae0] text-[0.78rem] font-extrabold tracking-[0.08em] uppercase">Choose password <span className="text-coral" aria-hidden="true">*</span></label>
+          <div className="relative">
             <input
               id="signup-password"
               name="password"
@@ -223,12 +224,12 @@ function NewAccountPanel({
               maxLength={15}
               value={values.password}
               onChange={(event) => setValues((v) => ({ ...v, password: event.target.value }))}
-              className="signup-input"
+              className="w-full min-h-[3.1rem] rounded-lg border border-white/14 bg-white/4 text-white pl-4 pr-12 text-[0.88rem] transition-[border-color,background-color] duration-[180ms] placeholder:text-[#6f7280] hover:border-white/24"
               autoComplete="new-password"
             />
             <button
               type="button"
-              className="signup-password-toggle"
+              className="absolute top-1/2 right-[0.4rem] w-[2.4rem] h-[2.4rem] grid place-items-center border-0 rounded-full bg-transparent text-[#9296a0] -translate-y-1/2 cursor-pointer transition-colors duration-[180ms] hover:text-white hover:bg-white/8 [&>svg]:w-[1.05rem]"
               aria-pressed={showPassword}
               aria-label={showPassword ? 'Hide password' : 'Show password'}
               onClick={() => setShowPassword((v) => !v)}
@@ -236,9 +237,13 @@ function NewAccountPanel({
               {showPassword ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}
             </button>
           </div>
-          <ul className="signup-checklist">
+          <ul className="list-none mt-[0.6rem] mb-0 p-0 flex flex-col gap-[0.4rem]">
             {checklist.map((item) => (
-              <li key={item.id} data-passed={item.passed}>
+              <li
+                className="flex items-center gap-2 text-[#9296a0] text-[0.72rem] transition-colors duration-[180ms] data-[passed=true]:text-[#78d8b4] [&>svg]:w-[0.85rem] [&>svg]:opacity-25 [&>svg]:transition-opacity [&>svg]:duration-[180ms] data-[passed=true]:[&>svg]:opacity-100"
+                key={item.id}
+                data-passed={item.passed}
+              >
                 <Check aria-hidden="true" />
                 <span>{item.label}</span>
               </li>
@@ -246,9 +251,9 @@ function NewAccountPanel({
           </ul>
         </div>
 
-        <div className="signup-field">
-          <label htmlFor="signup-captcha">Enter the code above <span className="signup-required" aria-hidden="true">*</span></label>
-          <div className="signup-captcha-row">
+        <div className="flex flex-col gap-2 mb-[1.1rem]">
+          <label htmlFor="signup-captcha" className="text-[#d8dae0] text-[0.78rem] font-extrabold tracking-[0.08em] uppercase">Enter the code above <span className="text-coral" aria-hidden="true">*</span></label>
+          <div className="flex items-start gap-4 max-mobile:flex-col max-mobile:items-stretch">
             <FakeCaptcha code={captchaCode} onRefresh={refreshCaptcha} />
             <input
               id="signup-captcha"
@@ -258,38 +263,44 @@ function NewAccountPanel({
               onChange={(event) => setValues((v) => ({ ...v, captchaInput: event.target.value }))}
               aria-invalid={captchaError || undefined}
               aria-describedby={captchaError ? 'signup-captcha-error' : undefined}
-              className="signup-input signup-captcha-input"
+              className="flex-1 min-h-[3.1rem] rounded-lg border border-white/14 bg-white/4 text-white pl-4 pr-4 text-[0.88rem] transition-[border-color,background-color] duration-[180ms] placeholder:text-[#6f7280] hover:border-white/24 max-mobile:w-full"
               autoComplete="off"
             />
           </div>
-          {captchaError && <p id="signup-captcha-error" role="alert" className="signup-error">That code doesn&rsquo;t match. Try again.</p>}
+          {captchaError && <p id="signup-captcha-error" role="alert" className="mt-[0.4rem] text-coral text-[0.7rem]">That code doesn&rsquo;t match. Try again.</p>}
         </div>
 
-        <div className="signup-checkbox-field">
+        <div className="grid grid-cols-[auto_1fr] items-start gap-3 mt-6 mb-3">
           <input
             id="signup-non-us"
             type="checkbox"
             required
             checked={values.agreeNonUs}
             onChange={(event) => setValues((v) => ({ ...v, agreeNonUs: event.target.checked }))}
+            className="w-[1.2rem] h-[1.2rem] mt-[0.15rem] accent-coral-action cursor-pointer"
           />
-          <label htmlFor="signup-non-us">I declare and confirm that I am not a citizen or resident of the US for tax purposes.</label>
+          <label htmlFor="signup-non-us" className="text-[#d8dae0] text-[0.78rem] leading-[1.5] normal-case tracking-normal font-semibold">I declare and confirm that I am not a citizen or resident of the US for tax purposes.</label>
         </div>
 
-        <p className="signup-fineprint mb-8">
+        <p className="mb-8 text-[#9699a3] text-[0.68rem] leading-[1.6] [&_a]:text-[#72c7e9] [&_a]:underline [&_a]:underline-offset-[0.15em]">
           By clicking Continue, you have confirmed that you have read, understood and agreed with our{' '}
           <a href="#">Terms and Conditions</a>, <a href="#">Partnership Agreement</a> and <a href="#">Privacy Policy</a>.
         </p>
 
         <SpecularButton type="submit" radius={999} {...specularVariants.primary}>Continue</SpecularButton>
-        <span className="signup-note">No account flow is connected in this preview.</span>
-        <p className="signup-status" role="status" aria-live="polite" data-visible={submitted}>
+        <span className="block mt-[0.9rem] text-[#9699a3] text-[0.62rem]">No account flow is connected in this preview.</span>
+        <p
+          className="hidden mt-[0.85rem] py-3 px-4 rounded-lg bg-[#78d8b4]/12 text-[#78d8b4] text-[0.75rem] font-bold data-[visible=true]:block"
+          role="status"
+          aria-live="polite"
+          data-visible={submitted}
+        >
           {submitted ? 'Preview only — no account was created.' : ''}
         </p>
       </form>
-      <p className="signup-footer-note">
+      <p className="mt-5 text-center text-[#9699a3] text-[0.78rem]">
         Already registered?{' '}
-        <button type="button" className="signup-link-action" onClick={onSwitchToLogin}>Login here</button>
+        <button type="button" className="border-0 bg-transparent p-0 text-white font-extrabold text-[length:inherit] underline underline-offset-[0.2em] cursor-pointer" onClick={onSwitchToLogin}>Login here</button>
       </p>
     </div>
   );
@@ -317,12 +328,12 @@ function MemberLoginPanel({
   };
 
   return (
-    <div className="signup-panel" role="tabpanel" id="signup-panel-login" aria-labelledby="signup-tab-login">
+    <div className="animate-[market-panel-enter_420ms_var(--ease-out)_both]" role="tabpanel" id="signup-panel-login" aria-labelledby="signup-tab-login">
       <form onSubmit={handleSubmit}>
-        <p className="signup-section-label">Member login</p>
+        <p className="mt-8 mb-4 text-[#8dd9f5] text-[0.65rem] font-extrabold uppercase tracking-[0.08em] first:mt-0">Member login</p>
 
-        <div className="signup-field">
-          <label htmlFor="login-email">Email <span className="signup-required" aria-hidden="true">*</span></label>
+        <div className="flex flex-col gap-2 mb-[1.1rem]">
+          <label htmlFor="login-email" className="text-[#d8dae0] text-[0.78rem] font-extrabold tracking-[0.08em] uppercase">Email <span className="text-coral" aria-hidden="true">*</span></label>
           <input
             id="login-email"
             name="email"
@@ -331,14 +342,14 @@ function MemberLoginPanel({
             required
             value={values.email}
             onChange={(event) => setValues((v) => ({ ...v, email: event.target.value }))}
-            className="signup-input"
+            className="w-full min-h-[3.1rem] rounded-lg border border-white/14 bg-white/4 text-white pl-4 pr-4 text-[0.88rem] transition-[border-color,background-color] duration-[180ms] placeholder:text-[#6f7280] hover:border-white/24"
             autoComplete="email"
           />
         </div>
 
-        <div className="signup-field">
-          <label htmlFor="login-password">Password <span className="signup-required" aria-hidden="true">*</span></label>
-          <div className="signup-password-field">
+        <div className="flex flex-col gap-2 mb-[1.1rem]">
+          <label htmlFor="login-password" className="text-[#d8dae0] text-[0.78rem] font-extrabold tracking-[0.08em] uppercase">Password <span className="text-coral" aria-hidden="true">*</span></label>
+          <div className="relative">
             <input
               id="login-password"
               name="password"
@@ -346,12 +357,12 @@ function MemberLoginPanel({
               required
               value={values.password}
               onChange={(event) => setValues((v) => ({ ...v, password: event.target.value }))}
-              className="signup-input"
+              className="w-full min-h-[3.1rem] rounded-lg border border-white/14 bg-white/4 text-white pl-4 pr-12 text-[0.88rem] transition-[border-color,background-color] duration-[180ms] placeholder:text-[#6f7280] hover:border-white/24"
               autoComplete="current-password"
             />
             <button
               type="button"
-              className="signup-password-toggle"
+              className="absolute top-1/2 right-[0.4rem] w-[2.4rem] h-[2.4rem] grid place-items-center border-0 rounded-full bg-transparent text-[#9296a0] -translate-y-1/2 cursor-pointer transition-colors duration-[180ms] hover:text-white hover:bg-white/8 [&>svg]:w-[1.05rem]"
               aria-pressed={showPassword}
               aria-label={showPassword ? 'Hide password' : 'Show password'}
               onClick={() => setShowPassword((v) => !v)}
@@ -359,18 +370,23 @@ function MemberLoginPanel({
               {showPassword ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}
             </button>
           </div>
-          <p className="signup-forgot"><a href="#">Forgot password?</a></p>
+          <p className="mt-2 text-right [&_a]:text-[#72c7e9] [&_a]:text-[0.72rem] [&_a]:font-bold"><a href="#">Forgot password?</a></p>
         </div>
 
         <SpecularButton type="submit" radius={999} {...specularVariants.primary}>Log in</SpecularButton>
-        <span className="signup-note">No login flow is connected in this preview.</span>
-        <p className="signup-status" role="status" aria-live="polite" data-visible={submitted}>
+        <span className="block mt-[0.9rem] text-[#9699a3] text-[0.62rem]">No login flow is connected in this preview.</span>
+        <p
+          className="hidden mt-[0.85rem] py-3 px-4 rounded-lg bg-[#78d8b4]/12 text-[#78d8b4] text-[0.75rem] font-bold data-[visible=true]:block"
+          role="status"
+          aria-live="polite"
+          data-visible={submitted}
+        >
           {submitted ? 'Preview only — no account session was created.' : ''}
         </p>
       </form>
-      <p className="signup-footer-note">
+      <p className="mt-5 text-center text-[#9699a3] text-[0.78rem]">
         New here?{' '}
-        <button type="button" className="signup-link-action" onClick={onSwitchToSignup}>Create an account</button>
+        <button type="button" className="border-0 bg-transparent p-0 text-white font-extrabold text-[length:inherit] underline underline-offset-[0.2em] cursor-pointer" onClick={onSwitchToSignup}>Create an account</button>
       </p>
     </div>
   );

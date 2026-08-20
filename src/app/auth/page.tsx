@@ -20,8 +20,11 @@ export default async function SignUpPage({ searchParams }: SignUpPageProps) {
     <>
       <SiteHeader />
       <main id="main-content">
-        <section className="signup-stage" aria-label="Account access">
-          <div className="signup-shell">
+        <section
+          className="min-h-[calc(100svh-var(--site-chrome-height))] grid place-items-center py-[var(--section-space)] bg-ink text-white max-nav:py-[clamp(3rem,8vw,5rem)]"
+          aria-label="Account access"
+        >
+          <div className="w-[min(calc(100%_-_2rem),30rem)] mx-auto">
             <SignUpForm initialTab={initialTab} />
           </div>
         </section>

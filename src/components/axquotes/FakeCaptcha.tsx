@@ -35,11 +35,11 @@ export function FakeCaptcha({ code, onRefresh }: FakeCaptchaProps) {
   }, [code]);
 
   return (
-    <div className="signup-captcha-visual" aria-busy={!code}>
+    <div className="flex items-center gap-[0.6rem]" aria-busy={!code}>
       {code ? (
         <svg
           viewBox="0 0 140 48"
-          className="signup-captcha-svg"
+          className="w-[8.75rem] h-12 rounded-lg overflow-hidden flex-none"
           role="img"
           aria-label={`Captcha code: ${code.split('').join(' ')}`}
         >
@@ -63,11 +63,11 @@ export function FakeCaptcha({ code, onRefresh }: FakeCaptchaProps) {
           ))}
         </svg>
       ) : (
-        <div className="signup-captcha-skeleton" aria-hidden="true" />
+        <div className="w-[8.75rem] h-12 rounded-lg overflow-hidden flex-none bg-white/6" aria-hidden="true" />
       )}
       <button
         type="button"
-        className="signup-captcha-refresh"
+        className="w-11 h-11 flex-none grid place-items-center border border-white/12 rounded-full bg-transparent text-[#d8dae0] cursor-pointer transition-[border-color,background-color,transform] duration-[180ms] ease-[var(--ease-out)] hover:border-white/28 hover:bg-white/6 hover:-translate-y-px [&>svg]:w-[1.05rem] [&>svg]:transition-transform [&>svg]:duration-[320ms] [&>svg]:ease-[var(--ease-out)] hover:[&>svg]:rotate-90"
         onClick={onRefresh}
         disabled={!code}
         aria-label="Generate a new captcha code"
